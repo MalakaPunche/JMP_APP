@@ -1,0 +1,57 @@
+Title 
+
+AI-Powered Entry-Level Job Market Analysis and Reporting System Application 
+
+
+Problem Statement 
+
+Recent graduates and entry-level job seekers often struggle to understand current job market trends, required skills, and how to position themselves effectively. This lack of insight can lead to misaligned job applications, prolonged job searches, and missed opportunities. There is a need for a tool that can provide real-time, actionable intelligence about the entry-level job market to help new graduates make informed career decisions. 
+
+
+Resources and Tools: 
+
+1. VSCode 
+2. Python (pandas, numpy, bs4, etc) 
+3. Postgresql
+4. Flutter 
+5. Jobspy
+6. Llama3
+7. Obsidian for notes and diagram 
+8. Github
+9. unsloth
+
+Objectives: 
+
+1. Develop a web-based platform using Flutter that can scrape, analyze, and visualize entry-level job market data 
+2. Implement an AI-powered system using llama to generate personalized, insightful reports for job seekers 
+3. Provide users with actionable intelligence on skills gaps, industry trends, and tailored job search strategies 
+
+Solution / Method: 
+
+1. Data Collection:  
+
+- Develop web scraping scripts using Python and BeautifulSoup to collect job listings from Linkedin 
+- Integrate APIs from platforms like LinkedIn for additional data 
+2. Data Processing and Analysis:  
+- Use Pandas for data cleaning, transformation, and basic analysis 
+- Implement natural language processing techniques to extract key skills and requirements from job descriptions 
+
+3. Trend Analysis and Visualization:  
+- Develop algorithms to identify emerging skills, industry trends, and salary ranges 
+- Create interactive visualizations using Flutter charts to display job market insights 
+4. AI-Powered Reporting:  
+- Fine-tune llama model on job market data and report writing 
+- Develop a system to generate personalized reports based on user profiles and job market analysis 
+5. Web Application Development:  
+- Create a user-friendly web interface using Flutter 
+- Implement user authentication and profile management 
+- Design dashboard for displaying job market insights and generated reports 
+
+Outcome: The project will result in a web-based platform called JobMarketPulse that offers the following features: 
+
+1. Batch job market analysis dashboard (instead of real-time) with visualizations of trends, required skills, and salary information for entry-level positions 
+2. Personalized AI-generated reports providing tailored advice on skill development, job search strategies, and industry insights 
+3. User profiles to track individual progress and receive customized recommendations 
+4. Interactive tools for comparing different job roles, industries, and geographical locations 
+
+This system will empower recent graduates and entry-level job seekers with data-driven insights, helping them make informed decisions about their career paths and increasing their chances of securing suitable employment opportunities.

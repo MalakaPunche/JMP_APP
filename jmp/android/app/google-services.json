@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "485640308371",
+    "project_id": "jmp-fyp",
+    "storage_bucket": "jmp-fyp.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:485640308371:android:05e6b6de35263f5f0aef66",
+        "android_client_info": {
+          "package_name": "com.jmp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBFA3gRiCrPxGLofxyw8-ZNzwT2xuEEPBM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
