@@ -1,13 +1,13 @@
-import '../common/Henshin_theme.dart';
-import '../common/Henshin_widgets.dart';
+import '../common/jmp_theme.dart';
+import '../common/jmp_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import '../common/henshin_util.dart';
+import '../common/jmp_util.dart';
 // import '../home_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import '../freelancer_page/frelancer_page_widget.dart'; // Add this import
-import '../login_with_email_page/login_with_email_page_widget.dart'; // Add this import
+// import '../freelancer_page/frelancer_page_widget.dart'; // Add this import
+import '../login_with_email/login_with_email.dart'; // Add this import
 
 class SignupWithEmailPageWidget extends StatefulWidget {
   const SignupWithEmailPageWidget({super.key});
@@ -129,7 +129,7 @@ class SignupWithEmailPageWidgetState extends State<SignupWithEmailPageWidget> {
                               child: Text(
                                 'Sertai komuniti kami hari ini',
                                 textAlign: TextAlign.center,
-                                style: HenshinTheme.bodyText1.override(
+                                style: JMPTheme.bodyText1.override(
                                   fontFamily: 'NatoSansKhmer',
                                   fontSize: 22,
                                   fontWeight: FontWeight.w600,
@@ -150,7 +150,7 @@ class SignupWithEmailPageWidgetState extends State<SignupWithEmailPageWidget> {
                                 16, 4, 16, 0),
                             child: Text(
                               'Cipta akaun untuk meneruskan.',
-                              style: HenshinTheme.bodyText1.override(
+                              style: JMPTheme.bodyText1.override(
                                 fontFamily: 'NatoSansKhmer',
                                 color: const Color(0xCD303030),
                                 useGoogleFonts: false,
@@ -167,7 +167,7 @@ class SignupWithEmailPageWidgetState extends State<SignupWithEmailPageWidget> {
                           obscureText: false,
                           decoration: InputDecoration(
                             hintText: 'Alamat Emel',
-                            hintStyle: HenshinTheme.bodyText1.override(
+                            hintStyle: JMPTheme.bodyText1.override(
                               fontFamily: 'NatoSansKhmer',
                               color: Colors.grey[400],
                               useGoogleFonts: false,
@@ -191,7 +191,7 @@ class SignupWithEmailPageWidgetState extends State<SignupWithEmailPageWidget> {
                             contentPadding: EdgeInsets.symmetric(
                                 vertical: 16, horizontal: 20),
                           ),
-                          style: HenshinTheme.bodyText1.override(
+                          style: JMPTheme.bodyText1.override(
                             fontFamily: 'NatoSansKhmer',
                             color: Colors.black87,
                             useGoogleFonts: false,
@@ -212,7 +212,7 @@ class SignupWithEmailPageWidgetState extends State<SignupWithEmailPageWidget> {
                           obscureText: !passwordVisibility1,
                           decoration: InputDecoration(
                             hintText: 'Kata Laluan',
-                            hintStyle: HenshinTheme.bodyText1.override(
+                            hintStyle: JMPTheme.bodyText1.override(
                               fontFamily: 'NatoSansKhmer',
                               color: Colors.grey[400],
                               useGoogleFonts: false,
@@ -247,7 +247,7 @@ class SignupWithEmailPageWidgetState extends State<SignupWithEmailPageWidget> {
                               ),
                             ),
                           ),
-                          style: HenshinTheme.bodyText1.override(
+                          style: JMPTheme.bodyText1.override(
                             fontFamily: 'NatoSansKhmer',
                             color: Colors.black87,
                             useGoogleFonts: false,
@@ -268,7 +268,7 @@ class SignupWithEmailPageWidgetState extends State<SignupWithEmailPageWidget> {
                           obscureText: !passwordVisibility2,
                           decoration: InputDecoration(
                             hintText: 'Sahkan Kata Laluan',
-                            hintStyle: HenshinTheme.bodyText1.override(
+                            hintStyle: JMPTheme.bodyText1.override(
                               fontFamily: 'NatoSansKhmer',
                               color: Colors.grey[400],
                               useGoogleFonts: false,
@@ -303,7 +303,7 @@ class SignupWithEmailPageWidgetState extends State<SignupWithEmailPageWidget> {
                               ),
                             ),
                           ),
-                          style: HenshinTheme.bodyText1.override(
+                          style: JMPTheme.bodyText1.override(
                             fontFamily: 'NatoSansKhmer',
                             color: Colors.black87,
                             useGoogleFonts: false,
@@ -329,8 +329,8 @@ class SignupWithEmailPageWidgetState extends State<SignupWithEmailPageWidget> {
                                 options: FFButtonOptions(
                                   width: 130,
                                   height: 45,
-                                  color: HenshinTheme.primaryColor,
-                                  textStyle: HenshinTheme.subtitle2.override(
+                                  color: JMPTheme.primaryColor,
+                                  textStyle: JMPTheme.subtitle2.override(
                                     fontFamily: 'NatoSansKhmer',
                                     color: Colors.white,
                                     useGoogleFonts: false,
@@ -357,7 +357,7 @@ class SignupWithEmailPageWidgetState extends State<SignupWithEmailPageWidget> {
                               child: Text(
                                 'Dengan mencipta akaun, anda bersetuju dengan Terma Perkhidmatan dan Dasar Privasi kami.',
                                 textAlign: TextAlign.center,
-                                style: HenshinTheme.bodyText1,
+                                style: JMPTheme.bodyText1,
                               ),
                             ),
                           ],
@@ -389,7 +389,7 @@ class SignupWithEmailPageWidgetState extends State<SignupWithEmailPageWidget> {
                                   8, 0, 8, 0),
                               child: Text(
                                 'or',
-                                style: HenshinTheme.bodyText1,
+                                style: JMPTheme.bodyText1,
                               ),
                             ),
                             Expanded(
@@ -446,7 +446,7 @@ class SignupWithEmailPageWidgetState extends State<SignupWithEmailPageWidget> {
                                               16, 0, 0, 0),
                                       child: Text(
                                         'Teruskan melalui Google',
-                                        style: HenshinTheme.subtitle2.override(
+                                        style: JMPTheme.subtitle2.override(
                                           fontFamily: 'NatoSansKhmer',
                                           color: Colors.black,
                                           fontWeight: FontWeight.w500,
@@ -490,7 +490,7 @@ class SignupWithEmailPageWidgetState extends State<SignupWithEmailPageWidget> {
                                               16, 0, 0, 0),
                                       child: Text(
                                         'Teruskan melalui Apple',
-                                        style: HenshinTheme.subtitle2.override(
+                                        style: JMPTheme.subtitle2.override(
                                           fontFamily: 'NatoSansKhmer',
                                           color: Colors.white,
                                           fontWeight: FontWeight.w500,
@@ -514,7 +514,7 @@ class SignupWithEmailPageWidgetState extends State<SignupWithEmailPageWidget> {
                           children: [
                             Text(
                               'Sudah mempunyai akaun?',
-                              style: HenshinTheme.bodyText1,
+                              style: JMPTheme.bodyText1,
                             ),
                             Padding(
                               padding: const EdgeInsetsDirectional.fromSTEB(
@@ -530,7 +530,7 @@ class SignupWithEmailPageWidgetState extends State<SignupWithEmailPageWidget> {
                                 },
                                 child: Text(
                                   'Log Masuk',
-                                  style: HenshinTheme.bodyText1.override(
+                                  style: JMPTheme.bodyText1.override(
                                     fontFamily: 'NatoSansKhmer',
                                     color: Colors.white,
                                     fontSize: 14,

@@ -1,6 +1,6 @@
-import '../common/Henshin_animations.dart';
-import '../common/Henshin_theme.dart';
-import '../signup_with_email_page/signup_with_email_page_widget.dart';
+import '../common/jmp_animations.dart';
+import '../common/jmp_theme.dart';
+import '../signup_with_email/signup_with_email.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -102,8 +102,8 @@ class JoinPageWidgetState extends State<JoinPageWidget>
               Padding(
                 padding: const EdgeInsetsDirectional.fromSTEB(0, 24, 0, 0),
                 child: Text(
-                  'Henshin',
-                  style: HenshinTheme.title1.override(
+                  'JMP',
+                  style: JMPTheme.title1.override(
                     fontFamily: 'NatoSansKhmer',
                     color: const Color(0xFF313131),
                     fontSize: 28,
@@ -122,7 +122,7 @@ class JoinPageWidgetState extends State<JoinPageWidget>
                 padding: const EdgeInsetsDirectional.fromSTEB(0, 12, 0, 120),
                 child: Text(
                   'Job and Freelancing Marketplace !',
-                  style: HenshinTheme.bodyText1.override(
+                  style: JMPTheme.bodyText1.override(
                     fontFamily: 'NatoSansKhmer',
                     color: const Color(0xBF696969),
                     useGoogleFonts: false,
@@ -136,8 +136,8 @@ class JoinPageWidgetState extends State<JoinPageWidget>
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
-                'Join to Henshin',
-                style: HenshinTheme.bodyText1.override(
+                'Join to JMP',
+                style: JMPTheme.bodyText1.override(
                   fontFamily: 'NatoSansKhmer',
                   fontSize: 18,
                   fontWeight: FontWeight.w600,
@@ -166,7 +166,7 @@ class JoinPageWidgetState extends State<JoinPageWidget>
                       width: 100,
                       height: 45,
                       decoration: BoxDecoration(
-                        color: HenshinTheme.primaryColor,
+                        color: JMPTheme.primaryColor,
                         borderRadius: BorderRadius.circular(36),
                       ),
                       child: Row(
@@ -182,7 +182,7 @@ class JoinPageWidgetState extends State<JoinPageWidget>
                             padding: const EdgeInsetsDirectional.fromSTEB(16, 0, 0, 0),
                             child: Text(
                               'Continue with E-mail',
-                              style: HenshinTheme.subtitle2.override(
+                              style: JMPTheme.subtitle2.override(
                                 fontFamily: 'NatoSansKhmer',
                                 color: Colors.white,
                                 fontWeight: FontWeight.w500,
@@ -233,7 +233,7 @@ class JoinPageWidgetState extends State<JoinPageWidget>
                           padding: const EdgeInsetsDirectional.fromSTEB(16, 0, 0, 0),
                           child: Text(
                             'Continue with Google',
-                            style: HenshinTheme.subtitle2.override(
+                            style: JMPTheme.subtitle2.override(
                               fontFamily: 'NatoSansKhmer',
                               color: Colors.black,
                               fontWeight: FontWeight.w500,
@@ -274,7 +274,7 @@ class JoinPageWidgetState extends State<JoinPageWidget>
                           padding: const EdgeInsetsDirectional.fromSTEB(16, 0, 0, 0),
                           child: Text(
                             'Continue with Apple',
-                            style: HenshinTheme.subtitle2.override(
+                            style: JMPTheme.subtitle2.override(
                               fontFamily: 'NatoSansKhmer',
                               color: Colors.white,
                               fontWeight: FontWeight.w500,
@@ -298,15 +298,15 @@ class JoinPageWidgetState extends State<JoinPageWidget>
               children: [
                 Text(
                   'By Signing up, you agree to our',
-                  style: HenshinTheme.bodyText1,
+                  style: JMPTheme.bodyText1,
                 ),
                 Padding(
                   padding: const EdgeInsetsDirectional.fromSTEB(4, 0, 0, 0),
                   child: Text(
                     'Term of Service',
-                    style: HenshinTheme.bodyText1.override(
+                    style: JMPTheme.bodyText1.override(
                       fontFamily: 'NatoSansKhmer',
-                      color: HenshinTheme.primaryColor,
+                      color: JMPTheme.primaryColor,
                       fontSize: 12,
                       fontWeight: FontWeight.bold,
                       useGoogleFonts: false,
@@ -324,15 +324,15 @@ class JoinPageWidgetState extends State<JoinPageWidget>
               children: [
                 Text(
                   'and',
-                  style: HenshinTheme.bodyText1,
+                  style: JMPTheme.bodyText1,
                 ),
                 Padding(
                   padding: const EdgeInsetsDirectional.fromSTEB(4, 0, 0, 0),
                   child: Text(
                     'Privacy Policy',
-                    style: HenshinTheme.bodyText1.override(
+                    style: JMPTheme.bodyText1.override(
                       fontFamily: 'NatoSansKhmer',
-                      color: HenshinTheme.primaryColor,
+                      color: JMPTheme.primaryColor,
                       fontSize: 12,
                       fontWeight: FontWeight.bold,
                       useGoogleFonts: false,

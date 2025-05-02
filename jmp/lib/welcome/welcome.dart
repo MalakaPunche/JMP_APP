@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import '../common/henshin_theme.dart';
-import '../join_page/join_page_widget.dart';
-import '../login_with_email_page/login_with_email_page_widget.dart';
+import '../common/jmp_theme.dart';
+import '../join_page/join_page.dart';
+import '../login_with_email/login_with_email.dart';
 
 class WelcomePageWidget extends StatelessWidget {
   const WelcomePageWidget({super.key});
@@ -26,8 +26,8 @@ class WelcomePageWidget extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      'Welcome to Henshin',
-                      style: HenshinTheme.title1.copyWith(
+                      'Welcome to JMP',
+                      style: JMPTheme.title1.copyWith(
                         color: Colors.white,
                         fontSize: 32,
                         fontWeight: FontWeight.bold,
@@ -37,7 +37,7 @@ class WelcomePageWidget extends StatelessWidget {
                     const SizedBox(height: 20),
                     Text(
                       'Job and Freelancing Marketplace',
-                      style: HenshinTheme.bodyText1.copyWith(
+                      style: JMPTheme.bodyText1.copyWith(
                         color: Colors.white,
                         fontSize: 18,
                       ),
@@ -62,7 +62,7 @@ class WelcomePageWidget extends StatelessWidget {
                           ),
                         ),
                         child: const Text(
-                          'Join Henshin',
+                          'Join JMP',
                           style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                         ),
                       ),

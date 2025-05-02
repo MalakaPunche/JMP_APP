@@ -1,10 +1,10 @@
-import '../common/Henshin_theme.dart';
-import '../common/Henshin_widgets.dart';
+import '../common/JMP_theme.dart';
+import '../common/JMP_widgets.dart';
 import '../signup_with_email_page/signup_with_email_page_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import '../common/henshin_util.dart';
+import '../common/JMP_util.dart';
 import '../home_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -112,7 +112,7 @@ class LoginWithEmailPageWidgetState extends State<LoginWithEmailPageWidget> {
                         child: Text(
                           'Transform your career with JMP!',
                           textAlign: TextAlign.center,
-                          style: HenshinTheme.bodyText1.override(
+                          style: JMPTheme.bodyText1.override(
                             fontFamily: 'NatoSansKhmer',
                             fontSize: 22,
                             fontWeight: FontWeight.w600,
@@ -133,7 +133,7 @@ class LoginWithEmailPageWidgetState extends State<LoginWithEmailPageWidget> {
                     padding: const EdgeInsetsDirectional.fromSTEB(16, 4, 16, 0),
                     child: Text(
                       'Sign in to continue.',
-                      style: HenshinTheme.bodyText1.override(
+                      style: JMPTheme.bodyText1.override(
                         fontFamily: 'NatoSansKhmer',
                         color: const Color(0xCB303030),
                         useGoogleFonts: false,
@@ -149,7 +149,7 @@ class LoginWithEmailPageWidgetState extends State<LoginWithEmailPageWidget> {
                   obscureText: false,
                   decoration: InputDecoration(
                     hintText: 'Email Address',
-                    hintStyle: HenshinTheme.bodyText1.override(
+                    hintStyle: JMPTheme.bodyText1.override(
                       fontFamily: 'NatoSansKhmer',
                       color: Colors.grey[400],
                       useGoogleFonts: false,
@@ -173,7 +173,7 @@ class LoginWithEmailPageWidgetState extends State<LoginWithEmailPageWidget> {
                     contentPadding:
                         EdgeInsets.symmetric(vertical: 16, horizontal: 20),
                   ),
-                  style: HenshinTheme.bodyText1.override(
+                  style: JMPTheme.bodyText1.override(
                     fontFamily: 'NatoSansKhmer',
                     color: Colors.black87,
                     useGoogleFonts: false,
@@ -193,7 +193,7 @@ class LoginWithEmailPageWidgetState extends State<LoginWithEmailPageWidget> {
                   obscureText: !passwordVisibility,
                   decoration: InputDecoration(
                     hintText: 'Password',
-                    hintStyle: HenshinTheme.bodyText1.override(
+                    hintStyle: JMPTheme.bodyText1.override(
                       fontFamily: 'NatoSansKhmer',
                       color: Colors.grey[400],
                       useGoogleFonts: false,
@@ -229,7 +229,7 @@ class LoginWithEmailPageWidgetState extends State<LoginWithEmailPageWidget> {
                       ),
                     ),
                   ),
-                  style: HenshinTheme.bodyText1.override(
+                  style: JMPTheme.bodyText1.override(
                     fontFamily: 'NatoSansKhmer',
                     color: Colors.black87,
                     useGoogleFonts: false,
@@ -260,7 +260,7 @@ class LoginWithEmailPageWidgetState extends State<LoginWithEmailPageWidget> {
                       },
                       child: Text(
                         'Forgot Password?',
-                        style: HenshinTheme.bodyText1.override(
+                        style: JMPTheme.bodyText1.override(
                           fontFamily: 'NatoSansKhmer',
                           color: Colors.white,
                           useGoogleFonts: false,
@@ -283,8 +283,8 @@ class LoginWithEmailPageWidgetState extends State<LoginWithEmailPageWidget> {
                         options: FFButtonOptions(
                           width: 130,
                           height: 45,
-                          color: HenshinTheme.primaryColor,
-                          textStyle: HenshinTheme.subtitle2.override(
+                          color: JMPTheme.primaryColor,
+                          textStyle: JMPTheme.subtitle2.override(
                             fontFamily: 'NatoSansKhmer',
                             color: Colors.white,
                             fontWeight: FontWeight.bold, // Added this line
@@ -323,7 +323,7 @@ class LoginWithEmailPageWidgetState extends State<LoginWithEmailPageWidget> {
                     padding: const EdgeInsetsDirectional.fromSTEB(8, 0, 8, 0),
                     child: Text(
                       'or',
-                      style: HenshinTheme.bodyText1,
+                      style: JMPTheme.bodyText1,
                     ),
                   ),
                   Expanded(
@@ -379,7 +379,7 @@ class LoginWithEmailPageWidgetState extends State<LoginWithEmailPageWidget> {
                                   16, 0, 0, 0),
                               child: Text(
                                 'Continue with Google',
-                                style: HenshinTheme.subtitle2.override(
+                                style: JMPTheme.subtitle2.override(
                                   fontFamily: 'NatoSansKhmer',
                                   color: Colors.black,
                                   fontWeight: FontWeight.w500,
@@ -422,7 +422,7 @@ class LoginWithEmailPageWidgetState extends State<LoginWithEmailPageWidget> {
                                   16, 0, 0, 0),
                               child: Text(
                                 'Continue with Apple',
-                                style: HenshinTheme.subtitle2.override(
+                                style: JMPTheme.subtitle2.override(
                                   fontFamily: 'NatoSansKhmer',
                                   color: Colors.white,
                                   fontWeight: FontWeight.w500,
@@ -445,7 +445,7 @@ class LoginWithEmailPageWidgetState extends State<LoginWithEmailPageWidget> {
                   children: [
                     Text(
                       'No account?',
-                      style: HenshinTheme.bodyText1,
+                      style: JMPTheme.bodyText1,
                     ),
                     Padding(
                       padding: const EdgeInsetsDirectional.fromSTEB(4, 0, 0, 0),
@@ -461,7 +461,7 @@ class LoginWithEmailPageWidgetState extends State<LoginWithEmailPageWidget> {
                         },
                         child: Text(
                           'Sign Up',
-                          style: HenshinTheme.bodyText1.override(
+                          style: JMPTheme.bodyText1.override(
                             fontFamily: 'NatoSansKhmer',
                             color: Colors.white,
                             fontSize: 14,

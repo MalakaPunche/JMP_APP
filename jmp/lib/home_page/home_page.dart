@@ -1,21 +1,21 @@
 import 'package:flutter/material.dart';
-import 'home_screen/home_screen.dart';
-import 'profile_screen/profile.dart';
-import 'community_forum/community_forum.dart';
-import 'chat/chat_screen.dart';
-import 'job_application_page/job_application_widget.dart';
-import 'job_application_page2/job_application_page2_widget.dart';
-import 'job_proposals_page2/job_proposals_page2_widget.dart';
-import 'job_proposals_page/job_proposals_page_widget.dart';
-import 'request_service_page1/request_service_page1_widget.dart';
-import 'service_inprogress_page/service_inprogress_page_widget.dart';
-import 'request_history/request_history_widget.dart';
+import '../home_screen/home_screen.dart';
+// import 'profile_screen/profile.dart';
+// import 'community_forum/community_forum.dart';
+// import 'chat/chat_screen.dart';
+// import 'job_application_page/job_application_widget.dart';
+// import 'job_application_page2/job_application_page2_widget.dart';
+// import 'job_proposals_page2/job_proposals_page2_widget.dart';
+// import 'job_proposals_page/job_proposals_page_widget.dart';
+// import 'request_service_page1/request_service_page1_widget.dart';
+// import 'service_inprogress_page/service_inprogress_page_widget.dart';
+// import 'request_history/request_history_widget.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:firebase_auth/firebase_auth.dart'; // Import Firebase Auth
 import 'dart:ui';
-import 'splash/splash_widget.dart';
-import 'jmp_dashboard.dart';
-import 'report_generate.dart';
+import '../splash/splash.dart';
+// import 'jmp_dashboard.dart';
+// import 'report_generate.dart';
 
 class HomePage extends StatefulWidget {
   final int? initialIndex;
@@ -190,7 +190,7 @@ class HomePageState extends State<HomePage> {
                         color: Colors.transparent,
                       ),
                       child: Text(
-                        'Henshin.',
+                        'JMP.',
                         style: GoogleFonts.ubuntu(
                           color: Colors.white,
                           fontSize: 48,
