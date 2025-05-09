@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class ReportGenerate extends StatefulWidget {
   const ReportGenerate({super.key});
@@ -10,6 +11,7 @@ class ReportGenerate extends StatefulWidget {
 
 class _ReportGenerateState extends State<ReportGenerate> {
   final _formKey = GlobalKey<FormState>();
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   
   // Form fields
   String _degree = '';
@@ -21,6 +23,46 @@ class _ReportGenerateState extends State<ReportGenerate> {
   
   // Preview toggle
   bool _showPreview = false;
+  bool _isLoading = false;
+
+  Future<void> _saveToFirestore() async {
+    try {
+      setState(() => _isLoading = true);
+      
+      await _firestore.collection('career_reports').add({
+        'degree': _degree,
+        'major': _major,
+        'university': _university,
+        'graduationYear': _graduationYear,
+        'workExperience': _workExperience,
+        'skills': _skills,
+        'createdAt': FieldValue.serverTimestamp(),
+      });
+
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Report saved successfully!'),
+            backgroundColor: Colors.green,
+          ),
+        );
+        setState(() => _showPreview = true);
+      }
+    } catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Error saving report: $e'),
+            backgroundColor: Colors.red,
+          ),
+        );
+      }
+    } finally {
+      if (mounted) {
+        setState(() => _isLoading = false);
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -163,15 +205,26 @@ class _ReportGenerateState extends State<ReportGenerate> {
                                   borderRadius: BorderRadius.circular(10),
                                 ),
                               ),
-                              onPressed: () {
-                                if (_formKey.currentState!.validate()) {
-                                  setState(() => _showPreview = true);
-                                }
-                              },
-                              child: const Text(
-                                'Generate Report',
-                                style: TextStyle(fontSize: 16),
-                              ),
+                              onPressed: _isLoading
+                                  ? null
+                                  : () async {
+                                      if (_formKey.currentState!.validate()) {
+                                        await _saveToFirestore();
+                                      }
+                                    },
+                              child: _isLoading
+                                  ? const SizedBox(
+                                      height: 20,
+                                      width: 20,
+                                      child: CircularProgressIndicator(
+                                        color: Colors.white,
+                                        strokeWidth: 2,
+                                      ),
+                                    )
+                                  : const Text(
+                                      'Generate Report',
+                                      style: TextStyle(fontSize: 16),
+                                    ),
                             ),
                           ),
                         ],

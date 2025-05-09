@@ -87,16 +87,16 @@ class FFButtonWidgetState extends State<FFButtonWidget> {
     final VoidCallback onPressed = widget.showLoadingIndicator
         ? () async {
             if (loading) {
-              HenshinLogger.debug('Button press ignored - already loading');
+              JMPLogger.debug('Button press ignored - already loading');
               return;
             }
             setState(() => loading = true);
             try {
               await widget.onPressed();
-              HenshinLogger.debug(
+              JMPLogger.debug(
                   'Button action completed successfully: ${widget.text}');
             } catch (e, stackTrace) {
-              HenshinLogger.error(
+              JMPLogger.error(
                 'Error in button press: ${widget.text}',
                 e,
                 stackTrace,
@@ -108,7 +108,7 @@ class FFButtonWidgetState extends State<FFButtonWidget> {
             }
           }
         : () {
-            HenshinLogger.debug('Simple button pressed: ${widget.text}');
+            JMPLogger.debug('Simple button pressed: ${widget.text}');
             widget.onPressed();
           };
 
@@ -188,15 +188,15 @@ class FFButtonWidgetState extends State<FFButtonWidget> {
 //     final VoidCallback? onPressed = widget.showLoadingIndicator
 //         ? () async {
 //             if (loading) {
-//               HenshinLogger.debug('Button press ignored - already loading');
+//               JMPLogger.debug('Button press ignored - already loading');
 //               return;
 //             }
 //             setState(() => loading = true);
 //             try {
 //               await widget.onPressed();
-//               HenshinLogger.debug('Button action completed successfully: ${widget.text}');
+//               JMPLogger.debug('Button action completed successfully: ${widget.text}');
 //             } catch (e, stackTrace) {
-//               HenshinLogger.error(
+//               JMPLogger.error(
 //                 'Error in button press: ${widget.text}',
 //                 e,
 //                 stackTrace,
@@ -206,7 +206,7 @@ class FFButtonWidgetState extends State<FFButtonWidget> {
 //             }
 //           }
 //         : () {
-//             HenshinLogger.debug('Simple button pressed: ${widget.text}');
+//             JMPLogger.debug('Simple button pressed: ${widget.text}');
 //             widget.onPressed();
 //           };
 

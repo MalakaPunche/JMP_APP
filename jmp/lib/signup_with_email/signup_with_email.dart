@@ -39,12 +39,24 @@ class SignupWithEmailPageWidgetState extends State<SignupWithEmailPageWidget> {
   Future<void> _createAccount() async {
     if (formKey.currentState!.validate()) {
       if (textController2?.text != textController3?.text) {
-        showSnackbar(context, 'Kata laluan tidak sepadan');
+        showSnackbar(context, 'Passwords do not match');
         return;
       }
 
       try {
-        showSnackbar(context, 'Mencipta akaun...', loading: true);
+        showSnackbar(context, 'Creating account...', loading: true);
+
+        if (!textController1!.text.contains('@') || !textController1!.text.contains('.')) {
+          showSnackbar(context, 'Please enter a valid email address');
+          return;
+        }
+
+        if (textController2!.text.length < 6) {
+          showSnackbar(context, 'Password must be at least 6 characters long');
+          return;
+        }
+
+        print('Attempting to create account with email: ${textController1!.text}');
 
         UserCredential userCredential =
             await FirebaseAuth.instance.createUserWithEmailAndPassword(
@@ -52,24 +64,37 @@ class SignupWithEmailPageWidgetState extends State<SignupWithEmailPageWidget> {
           password: textController2!.text,
         );
 
+        print('Account created successfully: ${userCredential.user?.uid}');
+
         if (userCredential.user != null) {
-          // Navigate to FreelancerPageWidget instead of HomePage
           Navigator.of(context).pushAndRemoveUntil(
-            MaterialPageRoute(
-                builder: (context) => const FreelancerPageWidget()),
+            MaterialPageRoute(builder: (context) => const HomePage()),
             (route) => false,
           );
         }
       } on FirebaseAuthException catch (e) {
-        if (e.code == 'kata laluan lemah') {
-          showSnackbar(context, 'Kata laluan yang diberikan terlalu lemah.');
-        } else if (e.code == 'email sudah digunakan.') {
-          showSnackbar(context, 'Akaun sudah wujud untuk email tersebut.');
-        } else {
-          showSnackbar(context, 'Error: ${e.message}');
+        print('Firebase Auth Error: ${e.code} - ${e.message}');
+        String errorMessage;
+        switch (e.code) {
+          case 'weak-password':
+            errorMessage = 'The provided password is too weak.';
+            break;
+          case 'email-already-in-use':
+            errorMessage = 'An account already exists for that email.';
+            break;
+          case 'invalid-email':
+            errorMessage = 'The email address is not valid.';
+            break;
+          case 'operation-not-allowed':
+            errorMessage = 'Email/password accounts are not enabled.';
+            break;
+          default:
+            errorMessage = 'Error: ${e.message}';
         }
+        showSnackbar(context, errorMessage);
       } catch (e) {
-        showSnackbar(context, 'Ralat telah berlaku. Sila cuba lagi.');
+        print('General Error: $e');
+        showSnackbar(context, 'An error occurred: $e');
       }
     }
   }
@@ -127,10 +152,10 @@ class SignupWithEmailPageWidgetState extends State<SignupWithEmailPageWidget> {
                               padding: const EdgeInsetsDirectional.fromSTEB(
                                   32, 32, 32, 0),
                               child: Text(
-                                'Sertai komuniti kami hari ini',
+                                'Join our community today',
                                 textAlign: TextAlign.center,
                                 style: JMPTheme.bodyText1.override(
-                                  fontFamily: 'NatoSansKhmer',
+                                  fontFamily: 'NotoSansKhmer',
                                   fontSize: 22,
                                   fontWeight: FontWeight.w600,
                                   color: Colors.black,
@@ -149,9 +174,9 @@ class SignupWithEmailPageWidgetState extends State<SignupWithEmailPageWidget> {
                             padding: const EdgeInsetsDirectional.fromSTEB(
                                 16, 4, 16, 0),
                             child: Text(
-                              'Cipta akaun untuk meneruskan.',
+                              'Create an account to continue.',
                               style: JMPTheme.bodyText1.override(
-                                fontFamily: 'NatoSansKhmer',
+                                fontFamily: 'NotoSansKhmer',
                                 color: const Color(0xCD303030),
                                 useGoogleFonts: false,
                               ),
@@ -166,9 +191,9 @@ class SignupWithEmailPageWidgetState extends State<SignupWithEmailPageWidget> {
                           controller: textController1,
                           obscureText: false,
                           decoration: InputDecoration(
-                            hintText: 'Alamat Emel',
+                            hintText: 'Email Address',
                             hintStyle: JMPTheme.bodyText1.override(
-                              fontFamily: 'NatoSansKhmer',
+                              fontFamily: 'NotoSansKhmer',
                               color: Colors.grey[400],
                               useGoogleFonts: false,
                             ),
@@ -192,7 +217,7 @@ class SignupWithEmailPageWidgetState extends State<SignupWithEmailPageWidget> {
                                 vertical: 16, horizontal: 20),
                           ),
                           style: JMPTheme.bodyText1.override(
-                            fontFamily: 'NatoSansKhmer',
+                            fontFamily: 'NotoSansKhmer',
                             color: Colors.black87,
                             useGoogleFonts: false,
                           ),
@@ -211,9 +236,9 @@ class SignupWithEmailPageWidgetState extends State<SignupWithEmailPageWidget> {
                           controller: textController2,
                           obscureText: !passwordVisibility1,
                           decoration: InputDecoration(
-                            hintText: 'Kata Laluan',
+                            hintText: 'Password',
                             hintStyle: JMPTheme.bodyText1.override(
-                              fontFamily: 'NatoSansKhmer',
+                              fontFamily: 'NotoSansKhmer',
                               color: Colors.grey[400],
                               useGoogleFonts: false,
                             ),
@@ -248,7 +273,7 @@ class SignupWithEmailPageWidgetState extends State<SignupWithEmailPageWidget> {
                             ),
                           ),
                           style: JMPTheme.bodyText1.override(
-                            fontFamily: 'NatoSansKhmer',
+                            fontFamily: 'NotoSansKhmer',
                             color: Colors.black87,
                             useGoogleFonts: false,
                           ),
@@ -267,9 +292,9 @@ class SignupWithEmailPageWidgetState extends State<SignupWithEmailPageWidget> {
                           controller: textController3,
                           obscureText: !passwordVisibility2,
                           decoration: InputDecoration(
-                            hintText: 'Sahkan Kata Laluan',
+                            hintText: 'Confirm Password',
                             hintStyle: JMPTheme.bodyText1.override(
-                              fontFamily: 'NatoSansKhmer',
+                              fontFamily: 'NotoSansKhmer',
                               color: Colors.grey[400],
                               useGoogleFonts: false,
                             ),
@@ -304,13 +329,13 @@ class SignupWithEmailPageWidgetState extends State<SignupWithEmailPageWidget> {
                             ),
                           ),
                           style: JMPTheme.bodyText1.override(
-                            fontFamily: 'NatoSansKhmer',
+                            fontFamily: 'NotoSansKhmer',
                             color: Colors.black87,
                             useGoogleFonts: false,
                           ),
                           validator: (val) {
                             if (val!.isEmpty) {
-                              return 'Perlu diisi';
+                              return 'Required';
                             }
                             return null;
                           },
@@ -325,13 +350,13 @@ class SignupWithEmailPageWidgetState extends State<SignupWithEmailPageWidget> {
                                   32, 32, 32, 0),
                               child: FFButtonWidget(
                                 onPressed: _createAccount,
-                                text: 'Cipta Akaun',
+                                text: 'Create Account',
                                 options: FFButtonOptions(
                                   width: 130,
                                   height: 45,
                                   color: JMPTheme.primaryColor,
                                   textStyle: JMPTheme.subtitle2.override(
-                                    fontFamily: 'NatoSansKhmer',
+                                    fontFamily: 'NotoSansKhmer',
                                     color: Colors.white,
                                     useGoogleFonts: false,
                                   ),
@@ -355,7 +380,7 @@ class SignupWithEmailPageWidgetState extends State<SignupWithEmailPageWidget> {
                           children: [
                             Expanded(
                               child: Text(
-                                'Dengan mencipta akaun, anda bersetuju dengan Terma Perkhidmatan dan Dasar Privasi kami.',
+                                'By creating an account, you agree to our Terms of Service and Privacy Policy.',
                                 textAlign: TextAlign.center,
                                 style: JMPTheme.bodyText1,
                               ),
@@ -445,9 +470,9 @@ class SignupWithEmailPageWidgetState extends State<SignupWithEmailPageWidget> {
                                           const EdgeInsetsDirectional.fromSTEB(
                                               16, 0, 0, 0),
                                       child: Text(
-                                        'Teruskan melalui Google',
+                                        'Continue with Google',
                                         style: JMPTheme.subtitle2.override(
-                                          fontFamily: 'NatoSansKhmer',
+                                          fontFamily: 'NotoSansKhmer',
                                           color: Colors.black,
                                           fontWeight: FontWeight.w500,
                                           useGoogleFonts: false,
@@ -489,9 +514,9 @@ class SignupWithEmailPageWidgetState extends State<SignupWithEmailPageWidget> {
                                           const EdgeInsetsDirectional.fromSTEB(
                                               16, 0, 0, 0),
                                       child: Text(
-                                        'Teruskan melalui Apple',
+                                        'Continue with Apple',
                                         style: JMPTheme.subtitle2.override(
-                                          fontFamily: 'NatoSansKhmer',
+                                          fontFamily: 'NotoSansKhmer',
                                           color: Colors.white,
                                           fontWeight: FontWeight.w500,
                                           useGoogleFonts: false,
@@ -513,7 +538,7 @@ class SignupWithEmailPageWidgetState extends State<SignupWithEmailPageWidget> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Text(
-                              'Sudah mempunyai akaun?',
+                              'Already have an account?',
                               style: JMPTheme.bodyText1,
                             ),
                             Padding(
@@ -529,9 +554,9 @@ class SignupWithEmailPageWidgetState extends State<SignupWithEmailPageWidget> {
                                   );
                                 },
                                 child: Text(
-                                  'Log Masuk',
+                                  'Log In',
                                   style: JMPTheme.bodyText1.override(
-                                    fontFamily: 'NatoSansKhmer',
+                                    fontFamily: 'NotoSansKhmer',
                                     color: Colors.white,
                                     fontSize: 14,
                                     fontWeight: FontWeight.bold,

@@ -104,7 +104,7 @@ class JoinPageWidgetState extends State<JoinPageWidget>
                 child: Text(
                   'JMP',
                   style: JMPTheme.title1.override(
-                    fontFamily: 'NatoSansKhmer',
+                    fontFamily: 'NotoSansKhmer',
                     color: const Color(0xFF313131),
                     fontSize: 28,
                     fontWeight: FontWeight.bold,
@@ -123,7 +123,7 @@ class JoinPageWidgetState extends State<JoinPageWidget>
                 child: Text(
                   'Job and Freelancing Marketplace !',
                   style: JMPTheme.bodyText1.override(
-                    fontFamily: 'NatoSansKhmer',
+                    fontFamily: 'NotoSansKhmer',
                     color: const Color(0xBF696969),
                     useGoogleFonts: false,
                   ),
@@ -138,7 +138,7 @@ class JoinPageWidgetState extends State<JoinPageWidget>
               Text(
                 'Join to JMP',
                 style: JMPTheme.bodyText1.override(
-                  fontFamily: 'NatoSansKhmer',
+                  fontFamily: 'NotoSansKhmer',
                   fontSize: 18,
                   fontWeight: FontWeight.w600,
                   useGoogleFonts: false,
@@ -183,7 +183,7 @@ class JoinPageWidgetState extends State<JoinPageWidget>
                             child: Text(
                               'Continue with E-mail',
                               style: JMPTheme.subtitle2.override(
-                                fontFamily: 'NatoSansKhmer',
+                                fontFamily: 'NotoSansKhmer',
                                 color: Colors.white,
                                 fontWeight: FontWeight.w500,
                                 useGoogleFonts: false,
@@ -234,7 +234,7 @@ class JoinPageWidgetState extends State<JoinPageWidget>
                           child: Text(
                             'Continue with Google',
                             style: JMPTheme.subtitle2.override(
-                              fontFamily: 'NatoSansKhmer',
+                              fontFamily: 'NotoSansKhmer',
                               color: Colors.black,
                               fontWeight: FontWeight.w500,
                               useGoogleFonts: false,
@@ -275,7 +275,7 @@ class JoinPageWidgetState extends State<JoinPageWidget>
                           child: Text(
                             'Continue with Apple',
                             style: JMPTheme.subtitle2.override(
-                              fontFamily: 'NatoSansKhmer',
+                              fontFamily: 'NotoSansKhmer',
                               color: Colors.white,
                               fontWeight: FontWeight.w500,
                               useGoogleFonts: false,
@@ -305,7 +305,7 @@ class JoinPageWidgetState extends State<JoinPageWidget>
                   child: Text(
                     'Term of Service',
                     style: JMPTheme.bodyText1.override(
-                      fontFamily: 'NatoSansKhmer',
+                      fontFamily: 'NotoSansKhmer',
                       color: JMPTheme.primaryColor,
                       fontSize: 12,
                       fontWeight: FontWeight.bold,
@@ -331,7 +331,7 @@ class JoinPageWidgetState extends State<JoinPageWidget>
                   child: Text(
                     'Privacy Policy',
                     style: JMPTheme.bodyText1.override(
-                      fontFamily: 'NatoSansKhmer',
+                      fontFamily: 'NotoSansKhmer',
                       color: JMPTheme.primaryColor,
                       fontSize: 12,
                       fontWeight: FontWeight.bold,

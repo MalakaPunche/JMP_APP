@@ -1,14 +1,15 @@
 import '../common/JMP_theme.dart';
 import '../common/JMP_widgets.dart';
-import '../signup_with_email_page/signup_with_email_page_widget.dart';
+import '../signup_with_email/signup_with_email.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../common/JMP_util.dart';
-import '../home_page.dart';
+import '../home_page/home_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_fonts/google_fonts.dart';
-import '../forgot_password_page/forgot_password_page_widget.dart';
+import '../forgot_password/forgot_password.dart';
+import '../signup_with_email/signup_with_email.dart';
 
 class LoginWithEmailPageWidget extends StatefulWidget {
   const LoginWithEmailPageWidget({super.key});
@@ -113,7 +114,7 @@ class LoginWithEmailPageWidgetState extends State<LoginWithEmailPageWidget> {
                           'Transform your career with JMP!',
                           textAlign: TextAlign.center,
                           style: JMPTheme.bodyText1.override(
-                            fontFamily: 'NatoSansKhmer',
+                            fontFamily: 'NotoSansKhmer',
                             fontSize: 22,
                             fontWeight: FontWeight.w600,
                             color: Colors.black,
@@ -134,7 +135,7 @@ class LoginWithEmailPageWidgetState extends State<LoginWithEmailPageWidget> {
                     child: Text(
                       'Sign in to continue.',
                       style: JMPTheme.bodyText1.override(
-                        fontFamily: 'NatoSansKhmer',
+                        fontFamily: 'NotoSansKhmer',
                         color: const Color(0xCB303030),
                         useGoogleFonts: false,
                       ),
@@ -150,7 +151,7 @@ class LoginWithEmailPageWidgetState extends State<LoginWithEmailPageWidget> {
                   decoration: InputDecoration(
                     hintText: 'Email Address',
                     hintStyle: JMPTheme.bodyText1.override(
-                      fontFamily: 'NatoSansKhmer',
+                      fontFamily: 'NotoSansKhmer',
                       color: Colors.grey[400],
                       useGoogleFonts: false,
                     ),
@@ -174,7 +175,7 @@ class LoginWithEmailPageWidgetState extends State<LoginWithEmailPageWidget> {
                         EdgeInsets.symmetric(vertical: 16, horizontal: 20),
                   ),
                   style: JMPTheme.bodyText1.override(
-                    fontFamily: 'NatoSansKhmer',
+                    fontFamily: 'NotoSansKhmer',
                     color: Colors.black87,
                     useGoogleFonts: false,
                   ),
@@ -194,7 +195,7 @@ class LoginWithEmailPageWidgetState extends State<LoginWithEmailPageWidget> {
                   decoration: InputDecoration(
                     hintText: 'Password',
                     hintStyle: JMPTheme.bodyText1.override(
-                      fontFamily: 'NatoSansKhmer',
+                      fontFamily: 'NotoSansKhmer',
                       color: Colors.grey[400],
                       useGoogleFonts: false,
                     ),
@@ -230,7 +231,7 @@ class LoginWithEmailPageWidgetState extends State<LoginWithEmailPageWidget> {
                     ),
                   ),
                   style: JMPTheme.bodyText1.override(
-                    fontFamily: 'NatoSansKhmer',
+                    fontFamily: 'NotoSansKhmer',
                     color: Colors.black87,
                     useGoogleFonts: false,
                   ),
@@ -261,7 +262,7 @@ class LoginWithEmailPageWidgetState extends State<LoginWithEmailPageWidget> {
                       child: Text(
                         'Forgot Password?',
                         style: JMPTheme.bodyText1.override(
-                          fontFamily: 'NatoSansKhmer',
+                          fontFamily: 'NotoSansKhmer',
                           color: Colors.white,
                           useGoogleFonts: false,
                         ),
@@ -285,7 +286,7 @@ class LoginWithEmailPageWidgetState extends State<LoginWithEmailPageWidget> {
                           height: 45,
                           color: JMPTheme.primaryColor,
                           textStyle: JMPTheme.subtitle2.override(
-                            fontFamily: 'NatoSansKhmer',
+                            fontFamily: 'NotoSansKhmer',
                             color: Colors.white,
                             fontWeight: FontWeight.bold, // Added this line
                             useGoogleFonts: false,
@@ -380,7 +381,7 @@ class LoginWithEmailPageWidgetState extends State<LoginWithEmailPageWidget> {
                               child: Text(
                                 'Continue with Google',
                                 style: JMPTheme.subtitle2.override(
-                                  fontFamily: 'NatoSansKhmer',
+                                  fontFamily: 'NotoSansKhmer',
                                   color: Colors.black,
                                   fontWeight: FontWeight.w500,
                                   useGoogleFonts: false,
@@ -423,7 +424,7 @@ class LoginWithEmailPageWidgetState extends State<LoginWithEmailPageWidget> {
                               child: Text(
                                 'Continue with Apple',
                                 style: JMPTheme.subtitle2.override(
-                                  fontFamily: 'NatoSansKhmer',
+                                  fontFamily: 'NotoSansKhmer',
                                   color: Colors.white,
                                   fontWeight: FontWeight.w500,
                                   useGoogleFonts: false,
@@ -462,7 +463,7 @@ class LoginWithEmailPageWidgetState extends State<LoginWithEmailPageWidget> {
                         child: Text(
                           'Sign Up',
                           style: JMPTheme.bodyText1.override(
-                            fontFamily: 'NatoSansKhmer',
+                            fontFamily: 'NotoSansKhmer',
                             color: Colors.white,
                             fontSize: 14,
                             fontWeight: FontWeight.bold,
