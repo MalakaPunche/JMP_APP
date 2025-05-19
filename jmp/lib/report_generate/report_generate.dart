@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import '../common/api_service.dart';
 
 class ReportGenerate extends StatefulWidget {
   const ReportGenerate({super.key});
@@ -12,6 +13,7 @@ class ReportGenerate extends StatefulWidget {
 class _ReportGenerateState extends State<ReportGenerate> {
   final _formKey = GlobalKey<FormState>();
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  final ApiService _apiService = ApiService();
   
   // Form fields
   String _degree = '';
@@ -24,11 +26,23 @@ class _ReportGenerateState extends State<ReportGenerate> {
   // Preview toggle
   bool _showPreview = false;
   bool _isLoading = false;
+  String _generatedReport = '';
 
-  Future<void> _saveToFirestore() async {
+  Future<void> _generateReport() async {
     try {
       setState(() => _isLoading = true);
       
+      // Generate report using the API
+      final report = await _apiService.generateReport(
+        degree: _degree,
+        major: _major,
+        university: _university,
+        graduationYear: _graduationYear,
+        workExperience: _workExperience,
+        skills: _skills,
+      );
+
+      // Save to Firestore
       await _firestore.collection('career_reports').add({
         'degree': _degree,
         'major': _major,
@@ -36,23 +50,28 @@ class _ReportGenerateState extends State<ReportGenerate> {
         'graduationYear': _graduationYear,
         'workExperience': _workExperience,
         'skills': _skills,
+        'report': report,
         'createdAt': FieldValue.serverTimestamp(),
       });
 
       if (mounted) {
+        setState(() {
+          _generatedReport = report;
+          _showPreview = true;
+        });
+        
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
-            content: Text('Report saved successfully!'),
+            content: Text('Report generated successfully!'),
             backgroundColor: Colors.green,
           ),
         );
-        setState(() => _showPreview = true);
       }
     } catch (e) {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('Error saving report: $e'),
+            content: Text('Error generating report: $e'),
             backgroundColor: Colors.red,
           ),
         );
@@ -164,6 +183,22 @@ class _ReportGenerateState extends State<ReportGenerate> {
                           ),
                           const SizedBox(height: 16),
                           
+                          // Graduation Year Input
+                          TextFormField(
+                            decoration: InputDecoration(
+                              labelText: 'Graduation Year',
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              filled: true,
+                              fillColor: Colors.grey[100],
+                            ),
+                            onChanged: (value) => setState(() => _graduationYear = value),
+                            validator: (value) =>
+                                value!.isEmpty ? 'Please enter your graduation year' : null,
+                          ),
+                          const SizedBox(height: 16),
+                          
                           // Work Experience Input
                           TextFormField(
                             decoration: InputDecoration(
@@ -209,7 +244,7 @@ class _ReportGenerateState extends State<ReportGenerate> {
                                   ? null
                                   : () async {
                                       if (_formKey.currentState!.validate()) {
-                                        await _saveToFirestore();
+                                        await _generateReport();
                                       }
                                     },
                               child: _isLoading
@@ -250,7 +285,7 @@ class _ReportGenerateState extends State<ReportGenerate> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(
-                                'Career Report Preview',
+                                'Career Report',
                                 style: GoogleFonts.ubuntu(
                                   fontSize: 18,
                                   fontWeight: FontWeight.bold,
@@ -272,53 +307,10 @@ class _ReportGenerateState extends State<ReportGenerate> {
                           const Divider(),
                           const SizedBox(height: 10),
                           
-                          // Sample AI-Generated Report
+                          // Display the generated report
                           Text(
-                            'Career Analysis Report',
-                            style: GoogleFonts.ubuntu(
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          const SizedBox(height: 10),
-                          Text(
-                            'Based on your $_degree in $_major from $_university, here\'s your personalized career analysis:',
+                            _generatedReport,
                             style: const TextStyle(fontSize: 14),
-                          ),
-                          const SizedBox(height: 20),
-                          
-                          // Market Fit Section
-                          _buildReportSection(
-                            'Market Fit',
-                            'Your degree and skills align well with current market demands. '
-                            'There is a growing need for $_major professionals in the technology sector.',
-                          ),
-                          
-                          // Career Opportunities
-                          _buildReportSection(
-                            'Career Opportunities',
-                            '• Senior Developer Roles\n'
-                            '• Technical Project Manager\n'
-                            '• Solutions Architect\n'
-                            '• Technical Consultant',
-                          ),
-                          
-                          // Skill Gap Analysis
-                          _buildReportSection(
-                            'Skill Gap Analysis',
-                            'Consider developing these additional skills:\n'
-                            '• Cloud Computing\n'
-                            '• Machine Learning\n'
-                            '• Agile Project Management',
-                          ),
-                          
-                          // Salary Insights
-                          _buildReportSection(
-                            'Salary Insights',
-                            'Based on your experience and skills:\n'
-                            '• Entry Level: RM 3,500 - RM 5,000\n'
-                            '• Mid Level: RM 5,000 - RM 8,000\n'
-                            '• Senior Level: RM 8,000+',
                           ),
                         ],
                       ),
@@ -330,28 +322,6 @@ class _ReportGenerateState extends State<ReportGenerate> {
           ),
         ),
       ),
-    );
-  }
-
-  Widget _buildReportSection(String title, String content) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          title,
-          style: GoogleFonts.ubuntu(
-            fontSize: 14,
-            fontWeight: FontWeight.bold,
-            color: const Color(0xFF4A90E2),
-          ),
-        ),
-        const SizedBox(height: 8),
-        Text(
-          content,
-          style: const TextStyle(fontSize: 14),
-        ),
-        const SizedBox(height: 16),
-      ],
     );
   }
 }
