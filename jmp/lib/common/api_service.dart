@@ -5,27 +5,16 @@ class ApiService {
   static const String baseUrl = 'http://localhost:8000'; // Change this to your server's URL
 
   Future<String> generateReport({
-    required String degree,
-    required String major,
-    required String university,
-    required String graduationYear,
-    required String workExperience,
     required String skills,
+    required String areas,
   }) async {
     try {
       final response = await http.post(
         Uri.parse('$baseUrl/analyze'),
         headers: {'Content-Type': 'application/json'},
         body: jsonEncode({
-          'query': 'Generate a career report',
-          'context': jsonEncode({
-            'degree': degree,
-            'major': major,
-            'university': university,
-            'graduationYear': graduationYear,
-            'workExperience': workExperience,
-            'skills': skills,
-          }),
+          'skills': skills,
+          'areas': areas,
         }),
       );
 

@@ -86,6 +86,16 @@ flutter:
     - assets/images/
     - assets/images/jmp_logo.png
     - assets/images/google_icon.svg
+    - assets/visualization_data.json
+    - assets/charts/visualizations/job_types.png
+    - assets/charts/visualizations/programming_skills_required.png
+    - assets/charts/visualizations/remote_jobs.png
+    - assets/charts/visualizations/skill_categories.png
+    - assets/charts/visualizations/skill_combinations.png
+    - assets/charts/visualizations/skill_trends.png
+    - assets/charts/visualizations/skills_by_category.png
+    - assets/charts/visualizations/top_10_programming_skills.png
+    - assets/charts/visualizations/top_skills.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images

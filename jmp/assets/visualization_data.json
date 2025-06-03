@@ -1,0 +1,186 @@
+{
+  "categories": [
+    {
+      "name": "Data Analysis",
+      "count": 121
+    },
+    {
+      "name": "Software Development",
+      "count": 54
+    },
+    {
+      "name": "Programming Languages",
+      "count": 41
+    },
+    {
+      "name": "Cybersecurity",
+      "count": 37
+    },
+    {
+      "name": "Database Management",
+      "count": 34
+    },
+    {
+      "name": "Project Management",
+      "count": 24
+    },
+    {
+      "name": "Web Development",
+      "count": 23
+    },
+    {
+      "name": "Cloud Computing",
+      "count": 18
+    },
+    {
+      "name": "UI/UX Design",
+      "count": 9
+    },
+    {
+      "name": "Machine Learning",
+      "count": 8
+    },
+    {
+      "name": "Mobile Development",
+      "count": 4
+    },
+    {
+      "name": "Scripting Languages",
+      "count": 2
+    }
+  ],
+  "trends": [
+    {
+      "month": "2024-09",
+      "skillPercentages": {
+        "Data Analysis": 100.0,
+        "Software Development": 0.0,
+        "Programming Languages": 0.0,
+        "Cybersecurity": 0.0,
+        "Database Management": 0.0
+      }
+    },
+    {
+      "month": "2024-10",
+      "skillPercentages": {
+        "Data Analysis": 50.0,
+        "Software Development": 50.0,
+        "Programming Languages": 50.0,
+        "Cybersecurity": 0.0,
+        "Database Management": 0.0
+      }
+    },
+    {
+      "month": "2024-11",
+      "skillPercentages": {
+        "Data Analysis": 51.92307692307693,
+        "Software Development": 32.69230769230769,
+        "Programming Languages": 23.076923076923077,
+        "Cybersecurity": 26.923076923076923,
+        "Database Management": 19.230769230769234
+      }
+    },
+    {
+      "month": "2024-12",
+      "skillPercentages": {
+        "Data Analysis": 31.25,
+        "Software Development": 18.75,
+        "Programming Languages": 12.5,
+        "Cybersecurity": 18.75,
+        "Database Management": 6.25
+      }
+    },
+    {
+      "month": "2025-01",
+      "skillPercentages": {
+        "Data Analysis": 0.0,
+        "Software Development": 0.0,
+        "Programming Languages": 0.0,
+        "Cybersecurity": 0.0,
+        "Database Management": 0.0
+      }
+    },
+    {
+      "month": "2025-02",
+      "skillPercentages": {
+        "Data Analysis": 25.0,
+        "Software Development": 50.0,
+        "Programming Languages": 0.0,
+        "Cybersecurity": 50.0,
+        "Database Management": 50.0
+      }
+    },
+    {
+      "month": "2025-03",
+      "skillPercentages": {
+        "Data Analysis": 58.18181818181818,
+        "Software Development": 25.454545454545453,
+        "Programming Languages": 20.0,
+        "Cybersecurity": 7.2727272727272725,
+        "Database Management": 10.909090909090908
+      }
+    },
+    {
+      "month": "2025-04",
+      "skillPercentages": {
+        "Data Analysis": 42.30769230769231,
+        "Software Development": 17.94871794871795,
+        "Programming Languages": 15.384615384615385,
+        "Cybersecurity": 11.538461538461538,
+        "Database Management": 14.102564102564102
+      }
+    },
+    {
+      "month": "2025-05",
+      "skillPercentages": {
+        "Data Analysis": 45.65217391304348,
+        "Software Development": 6.521739130434782,
+        "Programming Languages": 6.521739130434782,
+        "Cybersecurity": 10.869565217391305,
+        "Database Management": 8.695652173913043
+      }
+    }
+  ],
+  "combinations": [
+    {
+      "combination": "Programming Languages + Software Development",
+      "count": 41
+    },
+    {
+      "combination": "Data Analysis + Software Development",
+      "count": 34
+    },
+    {
+      "combination": "Data Analysis + Programming Languages",
+      "count": 28
+    },
+    {
+      "combination": "Software Development + Web Development",
+      "count": 22
+    },
+    {
+      "combination": "Programming Languages + Web Development",
+      "count": 20
+    },
+    {
+      "combination": "Data Analysis + Database Management",
+      "count": 20
+    },
+    {
+      "combination": "Cybersecurity + Data Analysis",
+      "count": 16
+    },
+    {
+      "combination": "Data Analysis + Project Management",
+      "count": 15
+    },
+    {
+      "combination": "Cloud Computing + Software Development",
+      "count": 12
+    },
+    {
+      "combination": "Cloud Computing + Data Analysis",
+      "count": 11
+    }
+  ]
+}

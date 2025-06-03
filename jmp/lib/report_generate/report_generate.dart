@@ -21,25 +21,69 @@ class _ReportGenerateState extends State<ReportGenerate> {
   String _university = '';
   String _graduationYear = '';
   String _workExperience = '';
-  String _skills = '';
+  
+  // Selected skills and areas
+  final Map<String, bool> _selectedSkills = {};
+  final Map<String, bool> _selectedAreas = {};
   
   // Preview toggle
   bool _showPreview = false;
   bool _isLoading = false;
   String _generatedReport = '';
 
+  // Define skill categories and their skills
+  final Map<String, List<String>> _skillCategories = {
+    'Programming Languages': ['python', 'java', 'javascript', 'sql', 'r', 'swift', 'kotlin', 'php', 'typescript'],
+    'Frameworks': ['react', 'node.js', 'express', '.net', 'asp.net'],
+    'Databases': ['mysql', 'mongodb', 'oracle', 'sql server'],
+    'Cloud & DevOps': ['aws', 'azure', 'gcp', 'kubernetes', 'docker', 'ci/cd', 'jenkins'],
+    'Soft Skills': ['communication', 'leadership', 'teamwork', 'problem solving', 'time management', 'project management', 'analytical', 'collaboration', 'agile'],
+  };
+
+  // Define areas of interest
+  final List<String> _areasOfInterest = [
+    'Data Science',
+    'Cybersecurity',
+    'Web Development',
+    'Cloud Computing',
+    'Mobile Development',
+  ];
+
+  @override
+  void initState() {
+    super.initState();
+    // Initialize all skills as unselected
+    for (var category in _skillCategories.values) {
+      for (var skill in category) {
+        _selectedSkills[skill] = false;
+      }
+    }
+    // Initialize all areas as unselected
+    for (var area in _areasOfInterest) {
+      _selectedAreas[area] = false;
+    }
+  }
+
   Future<void> _generateReport() async {
     try {
       setState(() => _isLoading = true);
       
+      // Get selected skills
+      final selectedSkills = _selectedSkills.entries
+          .where((entry) => entry.value)
+          .map((entry) => entry.key)
+          .toList();
+      
+      // Get selected areas
+      final selectedAreas = _selectedAreas.entries
+          .where((entry) => entry.value)
+          .map((entry) => entry.key)
+          .toList();
+
       // Generate report using the API
       final report = await _apiService.generateReport(
-        degree: _degree,
-        major: _major,
-        university: _university,
-        graduationYear: _graduationYear,
-        workExperience: _workExperience,
-        skills: _skills,
+        skills: selectedSkills.join(','),
+        areas: selectedAreas.join(','),
       );
 
       // Save to Firestore
@@ -49,7 +93,8 @@ class _ReportGenerateState extends State<ReportGenerate> {
         'university': _university,
         'graduationYear': _graduationYear,
         'workExperience': _workExperience,
-        'skills': _skills,
+        'skills': selectedSkills,
+        'areas': selectedAreas,
         'report': report,
         'createdAt': FieldValue.serverTimestamp(),
       });
@@ -81,6 +126,68 @@ class _ReportGenerateState extends State<ReportGenerate> {
         setState(() => _isLoading = false);
       }
     }
+  }
+
+  Widget _buildSkillCategory(String category, List<String> skills) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          category,
+          style: GoogleFonts.ubuntu(
+            fontSize: 16,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        const SizedBox(height: 8),
+        Wrap(
+          spacing: 8,
+          children: skills.map((skill) {
+            return FilterChip(
+              label: Text(skill),
+              selected: _selectedSkills[skill] ?? false,
+              onSelected: (bool selected) {
+                setState(() {
+                  _selectedSkills[skill] = selected;
+                });
+              },
+            );
+          }).toList(),
+        ),
+        const SizedBox(height: 16),
+      ],
+    );
+  }
+
+  Widget _buildAreaOfInterest() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          'Areas of Interest',
+          style: GoogleFonts.ubuntu(
+            fontSize: 16,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        const SizedBox(height: 8),
+        Wrap(
+          spacing: 8,
+          children: _areasOfInterest.map((area) {
+            return FilterChip(
+              label: Text(area),
+              selected: _selectedAreas[area] ?? false,
+              onSelected: (bool selected) {
+                setState(() {
+                  _selectedAreas[area] = selected;
+                });
+              },
+            );
+          }).toList(),
+        ),
+        const SizedBox(height: 16),
+      ],
+    );
   }
 
   @override
@@ -135,7 +242,7 @@ class _ReportGenerateState extends State<ReportGenerate> {
                           ),
                           const SizedBox(height: 20),
                           
-                          // Degree Input
+                          // Basic Information Fields
                           TextFormField(
                             decoration: InputDecoration(
                               labelText: 'Degree',
@@ -151,7 +258,6 @@ class _ReportGenerateState extends State<ReportGenerate> {
                           ),
                           const SizedBox(height: 16),
                           
-                          // Major Input
                           TextFormField(
                             decoration: InputDecoration(
                               labelText: 'Major/Field of Study',
@@ -167,7 +273,6 @@ class _ReportGenerateState extends State<ReportGenerate> {
                           ),
                           const SizedBox(height: 16),
                           
-                          // University Input
                           TextFormField(
                             decoration: InputDecoration(
                               labelText: 'University',
@@ -183,7 +288,6 @@ class _ReportGenerateState extends State<ReportGenerate> {
                           ),
                           const SizedBox(height: 16),
                           
-                          // Graduation Year Input
                           TextFormField(
                             decoration: InputDecoration(
                               labelText: 'Graduation Year',
@@ -199,7 +303,6 @@ class _ReportGenerateState extends State<ReportGenerate> {
                           ),
                           const SizedBox(height: 16),
                           
-                          // Work Experience Input
                           TextFormField(
                             decoration: InputDecoration(
                               labelText: 'Work Experience (years)',
@@ -212,21 +315,26 @@ class _ReportGenerateState extends State<ReportGenerate> {
                             keyboardType: TextInputType.number,
                             onChanged: (value) => setState(() => _workExperience = value),
                           ),
+                          const SizedBox(height: 24),
+                          
+                          // Skills Selection
+                          Text(
+                            'Select Your Skills',
+                            style: GoogleFonts.ubuntu(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
                           const SizedBox(height: 16),
                           
-                          // Skills Input
-                          TextFormField(
-                            decoration: InputDecoration(
-                              labelText: 'Key Skills (comma separated)',
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                              filled: true,
-                              fillColor: Colors.grey[100],
-                            ),
-                            maxLines: 3,
-                            onChanged: (value) => setState(() => _skills = value),
+                          // Build skill categories
+                          ..._skillCategories.entries.map(
+                            (entry) => _buildSkillCategory(entry.key, entry.value),
                           ),
+                          
+                          // Areas of Interest
+                          _buildAreaOfInterest(),
+                          
                           const SizedBox(height: 20),
                           
                           // Generate Button

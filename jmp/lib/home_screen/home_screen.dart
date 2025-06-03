@@ -1,9 +1,79 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:fl_chart/fl_chart.dart';
+import 'dart:convert';
+import 'package:flutter/services.dart';
+import '../models/skill_visualization.dart';
 
-class JMPDashboard extends StatelessWidget {
+class JMPDashboard extends StatefulWidget {
   const JMPDashboard({super.key});
+
+  @override
+  State<JMPDashboard> createState() => _JMPDashboardState();
+}
+
+class _JMPDashboardState extends State<JMPDashboard> {
+  SkillVisualization? _visualizationData;
+  bool _isLoading = true;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadVisualizationData();
+  }
+
+  Future<void> _loadVisualizationData() async {
+    try {
+      final String jsonString = await rootBundle.loadString('assets/visualization_data.json');
+      final Map<String, dynamic> jsonData = json.decode(jsonString);
+      setState(() {
+        _visualizationData = SkillVisualization.fromJson(jsonData);
+        _isLoading = false;
+      });
+    } catch (e) {
+      print('Error loading visualization data: $e');
+      setState(() {
+        _isLoading = false;
+      });
+    }
+  }
+
+  Widget _buildVisualizationSection(String title, String imagePath) {
+    return Container(
+      padding: const EdgeInsets.all(16),
+      margin: const EdgeInsets.only(bottom: 24),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(16),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.1),
+            blurRadius: 10,
+            offset: const Offset(0, 4),
+          ),
+        ],
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            title,
+            style: GoogleFonts.ubuntu(
+              fontSize: 18,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          const SizedBox(height: 16),
+          ClipRRect(
+            borderRadius: BorderRadius.circular(12),
+            child: Image.asset(
+              imagePath,
+              fit: BoxFit.contain,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -20,231 +90,69 @@ class JMPDashboard extends StatelessWidget {
           ),
         ),
         child: SafeArea(
-          child: SingleChildScrollView(
-            child: Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  // Header
-                  Text(
-                    'Your Dashboard',
-                    style: GoogleFonts.ubuntu(
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white,
-                    ),
-                  ),
-                  const SizedBox(height: 24),
-
-                  // Personalized Recommendations Section
-                  Container(
-                    padding: const EdgeInsets.all(16),
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(16),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black.withOpacity(0.1),
-                          blurRadius: 10,
-                          offset: const Offset(0, 4),
-                        ),
-                      ],
-                    ),
+          child: _isLoading
+              ? const Center(child: CircularProgressIndicator())
+              : SingleChildScrollView(
+                  child: Padding(
+                    padding: const EdgeInsets.all(16.0),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'Personalized Recommendations',
+                          'Your Dashboard',
                           style: GoogleFonts.ubuntu(
-                            fontSize: 18,
+                            fontSize: 24,
                             fontWeight: FontWeight.bold,
+                            color: Colors.white,
                           ),
                         ),
-                        const SizedBox(height: 16),
-                        _buildRecommendationCard(
-                          'Digital Skills Course',
-                          'Based on current market trends',
-                          Icons.computer,
+                        const SizedBox(height: 24),
+                        
+                        _buildVisualizationSection(
+                          'Skill Trends',
+                          'assets/charts/visualizations/skill_trends.png',
                         ),
-                        const SizedBox(height: 12),
-                        _buildRecommendationCard(
-                          'Technical Job Opportunity',
-                          'Matches your experience',
-                          Icons.build,
+                        
+                        _buildVisualizationSection(
+                          'Top 10 Programming Skills',
+                          'assets/charts/visualizations/top_10_programming_skills.png',
                         ),
-                      ],
-                    ),
-                  ),
-                  const SizedBox(height: 24),
-
-                  // Market Trends Section
-                  Container(
-                    padding: const EdgeInsets.all(16),
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(16),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black.withOpacity(0.1),
-                          blurRadius: 10,
-                          offset: const Offset(0, 4),
+                        
+                        _buildVisualizationSection(
+                          'Programming Skills Required',
+                          'assets/charts/visualizations/programming_skills_required.png',
                         ),
-                      ],
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'Market Trends',
-                          style: GoogleFonts.ubuntu(
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                          ),
+                        
+                        _buildVisualizationSection(
+                          'Skill Categories',
+                          'assets/charts/visualizations/skill_categories.png',
                         ),
-                        const SizedBox(height: 16),
-                        SizedBox(
-                          height: 200,
-                          child: LineChart(
-                            _createLineChartData(),
-                          ),
+                        
+                        _buildVisualizationSection(
+                          'Skill Combinations',
+                          'assets/charts/visualizations/skill_combinations.png',
+                        ),
+                        
+                        _buildVisualizationSection(
+                          'Skills by Category',
+                          'assets/charts/visualizations/skills_by_category.png',
+                        ),
+                        
+                        _buildVisualizationSection(
+                          'Top Skills',
+                          'assets/charts/visualizations/top_skills.png',
+                        ),
+                        
+                        _buildVisualizationSection(
+                          'Job Types',
+                          'assets/charts/visualizations/job_types.png',
                         ),
                       ],
                     ),
-                  ),
-                  const SizedBox(height: 24),
-
-                  // Quick Statistics Section
-                  Container(
-                    padding: const EdgeInsets.all(16),
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(16),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black.withOpacity(0.1),
-                          blurRadius: 10,
-                          offset: const Offset(0, 4),
-                        ),
-                      ],
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'Quick Statistics',
-                          style: GoogleFonts.ubuntu(
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        const SizedBox(height: 16),
-                        _buildStatisticCard(
-                          'Most In-Demand Skills',
-                          'Information Technology',
-                          Icons.trending_up,
-                          Colors.green,
-                        ),
-                        const SizedBox(height: 12),
-                        _buildStatisticCard(
-                          'Average Monthly Salary For Your Qualification',
-                          'RM 3,500',
-                          Icons.attach_money,
-                          Colors.blue,
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget _buildRecommendationCard(String title, String subtitle, IconData icon) {
-    return Card(
-      elevation: 0,
-      color: const Color(0xFF4A90E2).withOpacity(0.1),
-      child: ListTile(
-        leading: Icon(icon, color: const Color(0xFF4A90E2)),
-        title: Text(title, style: const TextStyle(fontWeight: FontWeight.bold)),
-        subtitle: Text(subtitle),
-        trailing: const Icon(Icons.arrow_forward_ios, size: 16),
-      ),
-    );
-  }
-
-  Widget _buildStatisticCard(
-      String title, String value, IconData icon, Color color) {
-    return Container(
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: color.withOpacity(0.1),
-        borderRadius: BorderRadius.circular(12),
-      ),
-      child: Row(
-        children: [
-          Icon(icon, color: color, size: 24),
-          const SizedBox(width: 16),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  title,
-                  style: const TextStyle(
-                    fontSize: 14,
-                    color: Colors.grey,
                   ),
                 ),
-                const SizedBox(height: 4),
-                Text(
-                  value,
-                  style: const TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  LineChartData _createLineChartData() {
-    return LineChartData(
-      gridData: FlGridData(show: false),
-      titlesData: FlTitlesData(
-        rightTitles: AxisTitles(sideTitles: SideTitles(showTitles: false)),
-        topTitles: AxisTitles(sideTitles: SideTitles(showTitles: false)),
-      ),
-      borderData: FlBorderData(show: false),
-      lineBarsData: [
-        LineChartBarData(
-          spots: [
-            const FlSpot(0, 3),
-            const FlSpot(2.6, 2),
-            const FlSpot(4.9, 5),
-            const FlSpot(6.8, 3.1),
-            const FlSpot(8, 4),
-            const FlSpot(9.5, 3),
-            const FlSpot(11, 4),
-          ],
-          isCurved: true,
-          color: const Color(0xFF4A90E2),
-          barWidth: 3,
-          dotData: FlDotData(show: false),
-          belowBarData: BarAreaData(
-            show: true,
-            color: const Color(0xFF4A90E2).withOpacity(0.1),
-          ),
         ),
-      ],
+      ),
     );
   }
 }
