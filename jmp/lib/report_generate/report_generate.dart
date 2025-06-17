@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import '../common/api_service.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class ReportGenerate extends StatefulWidget {
   const ReportGenerate({super.key});
@@ -68,6 +69,17 @@ class _ReportGenerateState extends State<ReportGenerate> {
     try {
       setState(() => _isLoading = true);
       
+      final user = FirebaseAuth.instance.currentUser;
+      if (user == null) {
+        // Handle not logged in
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('You must be logged in to generate a report.')),
+        );
+        setState(() => _isLoading = false);
+        return;
+      }
+      final userId = user.uid;
+      
       // Get selected skills
       final selectedSkills = _selectedSkills.entries
           .where((entry) => entry.value)
@@ -87,7 +99,7 @@ class _ReportGenerateState extends State<ReportGenerate> {
       );
 
       // Save to Firestore
-      await _firestore.collection('career_reports').add({
+      await _firestore.collection('reports').add({
         'degree': _degree,
         'major': _major,
         'university': _university,
@@ -97,6 +109,7 @@ class _ReportGenerateState extends State<ReportGenerate> {
         'areas': selectedAreas,
         'report': report,
         'createdAt': FieldValue.serverTimestamp(),
+        'userId': userId,
       });
 
       if (mounted) {

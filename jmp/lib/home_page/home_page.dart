@@ -5,6 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart'; // Import Firebase Auth
 import 'dart:ui';
 import '../splash/splash.dart';
 import '../report_generate/report_generate.dart';
+import '../historical_reports/historical_reports.dart';
 
 
 class HomePage extends StatefulWidget {
@@ -27,16 +28,19 @@ class HomePageState extends State<HomePage> {
   final List<Widget> _screens = [
     const JMPDashboard(),
     const ReportGenerate(),
+    HistoricalReports(),
   ];
 
   final List<String> _titles = [
     'Dashboard',
     'Career Report Generator',
+    'Historical Reports',
   ];
 
   final List<Map<String, dynamic>> _drawerItems = [
     {'icon': Icons.dashboard, 'title': 'Dashboard', 'index': 0},
     {'icon': Icons.assessment, 'title': 'Career Report', 'index': 1},
+    {'icon': Icons.history, 'title': 'Historical Reports', 'index': 2},
   ];
 
   void _onItemTapped(int index) {
