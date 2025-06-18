@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import '../common/api_service.dart';
+import '../common/jmp_theme.dart';
+import '../common/jmp_widgets.dart';
+import '../common/jmp_util.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class ReportGenerate extends StatefulWidget {
@@ -34,11 +36,30 @@ class _ReportGenerateState extends State<ReportGenerate> {
 
   // Define skill categories and their skills
   final Map<String, List<String>> _skillCategories = {
-    'Programming Languages': ['python', 'java', 'javascript', 'sql', 'r', 'swift', 'kotlin', 'php', 'typescript'],
-    'Frameworks': ['react', 'node.js', 'express', '.net', 'asp.net'],
-    'Databases': ['mysql', 'mongodb', 'oracle', 'sql server'],
-    'Cloud & DevOps': ['aws', 'azure', 'gcp', 'kubernetes', 'docker', 'ci/cd', 'jenkins'],
-    'Soft Skills': ['communication', 'leadership', 'teamwork', 'problem solving', 'time management', 'project management', 'analytical', 'collaboration', 'agile'],
+    'Programming Languages': [
+      'sql', 'r', 'python', 'javascript', 'java', 'swift', 'typescript', 'php', 'kotlin', 'c++'
+    ],
+    'Frameworks & Libraries': [
+      'express', '.net', 'asp.net', 'node.js', 'react', 'angular', 'django', 'spring', 'vue.js', 'flask'
+    ],
+    'Databases': [
+      'oracle', 'mysql', 'mongodb', 'sql server', 'postgresql', 'redis', 'sqlite', 'cassandra', 'firebase', 'elasticsearch'
+    ],
+    'Cloud & DevOps': [
+      'azure', 'aws', 'ci/cd', 'jenkins', 'cloud computing', 'kubernetes', 'gcp', 'devops', 'docker', 'git'
+    ],
+    'Soft Skills': [
+      'communication', 'analytical', 'leadership', 'collaboration', 'teamwork', 'time management', 'project management', 'problem solving', 'agile', 'critical thinking'
+    ],
+    'Data & Analytics': [
+      'data analysis', 'statistics', 'machine learning', 'data visualization', 'pandas', 'numpy', 'matplotlib', 'scikit-learn', 'r studio', 'jupyter'
+    ],
+    'Security & Testing': [
+      'cybersecurity', 'unit testing', 'integration testing', 'selenium', 'jest', 'pytest', 'junit', 'penetration testing', 'authentication', 'encryption'
+    ],
+    'Mobile & Web': [
+      'html5', 'css3', 'javascript', 'react native', 'flutter', 'responsive design', 'seo', 'webpack', 'bootstrap', 'jquery'
+    ],
   };
 
   // Define areas of interest
@@ -72,9 +93,7 @@ class _ReportGenerateState extends State<ReportGenerate> {
       final user = FirebaseAuth.instance.currentUser;
       if (user == null) {
         // Handle not logged in
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('You must be logged in to generate a report.')),
-        );
+        showSnackbar(context, 'You must be logged in to generate a report.');
         setState(() => _isLoading = false);
         return;
       }
@@ -118,21 +137,11 @@ class _ReportGenerateState extends State<ReportGenerate> {
           _showPreview = true;
         });
         
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('Report generated successfully!'),
-            backgroundColor: Colors.green,
-          ),
-        );
+        showSnackbar(context, 'Report generated successfully!');
       }
     } catch (e) {
       if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text('Error generating report: $e'),
-            backgroundColor: Colors.red,
-          ),
-        );
+        showSnackbar(context, 'Error generating report: $e');
       }
     } finally {
       if (mounted) {
@@ -142,79 +151,130 @@ class _ReportGenerateState extends State<ReportGenerate> {
   }
 
   Widget _buildSkillCategory(String category, List<String> skills) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          category,
-          style: GoogleFonts.ubuntu(
-            fontSize: 16,
-            fontWeight: FontWeight.bold,
+    return Container(
+      margin: const EdgeInsets.only(bottom: 24),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            category,
+            style: JMPTheme.subtitle1.override(
+              color: JMPTheme.primaryColor,
+              fontWeight: FontWeight.w600,
+              useGoogleFonts: false,
+            ),
           ),
-        ),
-        const SizedBox(height: 8),
-        Wrap(
-          spacing: 8,
-          children: skills.map((skill) {
-            return FilterChip(
-              label: Text(skill),
-              selected: _selectedSkills[skill] ?? false,
-              onSelected: (bool selected) {
-                setState(() {
-                  _selectedSkills[skill] = selected;
-                });
-              },
-            );
-          }).toList(),
-        ),
-        const SizedBox(height: 16),
-      ],
+          const SizedBox(height: 12),
+          Wrap(
+            spacing: 8,
+            runSpacing: 8,
+            children: skills.map((skill) {
+              return FilterChip(
+                label: Text(
+                  skill,
+                  style: JMPTheme.bodyText2.override(
+                    useGoogleFonts: false,
+                  ),
+                ),
+                selected: _selectedSkills[skill] ?? false,
+                onSelected: (bool selected) {
+                  setState(() {
+                    _selectedSkills[skill] = selected;
+                  });
+                },
+                selectedColor: JMPTheme.primaryColor.withOpacity(0.2),
+                checkmarkColor: JMPTheme.primaryColor,
+                backgroundColor: Colors.white,
+                side: BorderSide(
+                  color: _selectedSkills[skill] ?? false 
+                      ? JMPTheme.primaryColor 
+                      : Colors.grey[300]!,
+                ),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(20),
+                ),
+              );
+            }).toList(),
+          ),
+        ],
+      ),
     );
   }
 
   Widget _buildAreaOfInterest() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          'Areas of Interest',
-          style: GoogleFonts.ubuntu(
-            fontSize: 16,
-            fontWeight: FontWeight.bold,
+    return Container(
+      margin: const EdgeInsets.only(bottom: 24),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            'Areas of Interest',
+            style: JMPTheme.subtitle1.override(
+              color: JMPTheme.primaryColor,
+              fontWeight: FontWeight.w600,
+              useGoogleFonts: false,
+            ),
           ),
-        ),
-        const SizedBox(height: 8),
-        Wrap(
-          spacing: 8,
-          children: _areasOfInterest.map((area) {
-            return FilterChip(
-              label: Text(area),
-              selected: _selectedAreas[area] ?? false,
-              onSelected: (bool selected) {
-                setState(() {
-                  _selectedAreas[area] = selected;
-                });
-              },
-            );
-          }).toList(),
-        ),
-        const SizedBox(height: 16),
-      ],
+          const SizedBox(height: 12),
+          Wrap(
+            spacing: 8,
+            runSpacing: 8,
+            children: _areasOfInterest.map((area) {
+              return FilterChip(
+                label: Text(
+                  area,
+                  style: JMPTheme.bodyText2.override(
+                    useGoogleFonts: false,
+                  ),
+                ),
+                selected: _selectedAreas[area] ?? false,
+                onSelected: (bool selected) {
+                  setState(() {
+                    _selectedAreas[area] = selected;
+                  });
+                },
+                selectedColor: JMPTheme.secondaryColor.withOpacity(0.2),
+                checkmarkColor: JMPTheme.secondaryColor,
+                backgroundColor: Colors.white,
+                side: BorderSide(
+                  color: _selectedAreas[area] ?? false 
+                      ? JMPTheme.secondaryColor 
+                      : Colors.grey[300]!,
+                ),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(20),
+                ),
+              );
+            }).toList(),
+          ),
+        ],
+      ),
     );
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      extendBodyBehindAppBar: true,
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        automaticallyImplyLeading: false,
+        title: Text(
+          'Career Report Generator',
+          style: JMPTheme.title1.override(
+            color: Colors.white,
+            useGoogleFonts: false,
+          ),
+        ),
+        centerTitle: true,
+      ),
       body: Container(
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
-            colors: [
-              const Color(0xFF4A90E2).withOpacity(0.5),
-              const Color(0xFF50E3C2).withOpacity(0.5),
-            ],
+            colors: [Color(0xFF4A90E2), Color(0xFF50E3C2)],
           ),
         ),
         child: SafeArea(
@@ -223,122 +283,116 @@ class _ReportGenerateState extends State<ReportGenerate> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  'Career Report Generator',
-                  style: GoogleFonts.ubuntu(
-                    fontSize: 24,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white,
-                  ),
-                ),
                 const SizedBox(height: 20),
                 
                 // Configuration Form
-                Card(
-                  elevation: 4,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(15),
+                Container(
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(20),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.1),
+                        blurRadius: 10,
+                        offset: const Offset(0, 4),
+                      ),
+                    ],
                   ),
                   child: Padding(
-                    padding: const EdgeInsets.all(16.0),
+                    padding: const EdgeInsets.all(24.0),
                     child: Form(
                       key: _formKey,
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(
-                            'Enter Your Information',
-                            style: GoogleFonts.ubuntu(
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          const SizedBox(height: 20),
-                          
-                          // Basic Information Fields
-                          TextFormField(
-                            decoration: InputDecoration(
-                              labelText: 'Degree',
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(10),
+                          Row(
+                            children: [
+                              Container(
+                                padding: const EdgeInsets.all(8),
+                                decoration: BoxDecoration(
+                                  color: JMPTheme.primaryColor.withOpacity(0.1),
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
+                                child: Icon(
+                                  Icons.person_outline,
+                                  color: JMPTheme.primaryColor,
+                                  size: 24,
+                                ),
                               ),
-                              filled: true,
-                              fillColor: Colors.grey[100],
-                            ),
-                            onChanged: (value) => setState(() => _degree = value),
-                            validator: (value) =>
-                                value!.isEmpty ? 'Please enter your degree' : null,
-                          ),
-                          const SizedBox(height: 16),
-                          
-                          TextFormField(
-                            decoration: InputDecoration(
-                              labelText: 'Major/Field of Study',
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(10),
+                              const SizedBox(width: 12),
+                              Text(
+                                'Personal Information',
+                                style: JMPTheme.title2.override(
+                                  color: JMPTheme.primaryColor,
+                                  useGoogleFonts: false,
+                                ),
                               ),
-                              filled: true,
-                              fillColor: Colors.grey[100],
-                            ),
-                            onChanged: (value) => setState(() => _major = value),
-                            validator: (value) =>
-                                value!.isEmpty ? 'Please enter your major' : null,
-                          ),
-                          const SizedBox(height: 16),
-                          
-                          TextFormField(
-                            decoration: InputDecoration(
-                              labelText: 'University',
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                              filled: true,
-                              fillColor: Colors.grey[100],
-                            ),
-                            onChanged: (value) => setState(() => _university = value),
-                            validator: (value) =>
-                                value!.isEmpty ? 'Please enter your university' : null,
-                          ),
-                          const SizedBox(height: 16),
-                          
-                          TextFormField(
-                            decoration: InputDecoration(
-                              labelText: 'Graduation Year',
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                              filled: true,
-                              fillColor: Colors.grey[100],
-                            ),
-                            onChanged: (value) => setState(() => _graduationYear = value),
-                            validator: (value) =>
-                                value!.isEmpty ? 'Please enter your graduation year' : null,
-                          ),
-                          const SizedBox(height: 16),
-                          
-                          TextFormField(
-                            decoration: InputDecoration(
-                              labelText: 'Work Experience (years)',
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                              filled: true,
-                              fillColor: Colors.grey[100],
-                            ),
-                            keyboardType: TextInputType.number,
-                            onChanged: (value) => setState(() => _workExperience = value),
+                            ],
                           ),
                           const SizedBox(height: 24),
                           
-                          // Skills Selection
-                          Text(
-                            'Select Your Skills',
-                            style: GoogleFonts.ubuntu(
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
-                            ),
+                          // Basic Information Fields
+                          _buildTextField(
+                            label: 'Degree',
+                            onChanged: (value) => setState(() => _degree = value),
+                            validator: (value) => value!.isEmpty ? 'Please enter your degree' : null,
                           ),
                           const SizedBox(height: 16),
+                          
+                          _buildTextField(
+                            label: 'Major/Field of Study',
+                            onChanged: (value) => setState(() => _major = value),
+                            validator: (value) => value!.isEmpty ? 'Please enter your major' : null,
+                          ),
+                          const SizedBox(height: 16),
+                          
+                          _buildTextField(
+                            label: 'University',
+                            onChanged: (value) => setState(() => _university = value),
+                            validator: (value) => value!.isEmpty ? 'Please enter your university' : null,
+                          ),
+                          const SizedBox(height: 16),
+                          
+                          _buildTextField(
+                            label: 'Graduation Year',
+                            onChanged: (value) => setState(() => _graduationYear = value),
+                            validator: (value) => value!.isEmpty ? 'Please enter your graduation year' : null,
+                          ),
+                          const SizedBox(height: 16),
+                          
+                          _buildTextField(
+                            label: 'Work Experience (years)',
+                            keyboardType: TextInputType.number,
+                            onChanged: (value) => setState(() => _workExperience = value),
+                          ),
+                          const SizedBox(height: 32),
+                          
+                          // Skills Selection
+                          Row(
+                            children: [
+                              Container(
+                                padding: const EdgeInsets.all(8),
+                                decoration: BoxDecoration(
+                                  color: JMPTheme.secondaryColor.withOpacity(0.1),
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
+                                child: Icon(
+                                  Icons.psychology_outlined,
+                                  color: JMPTheme.secondaryColor,
+                                  size: 24,
+                                ),
+                              ),
+                              const SizedBox(width: 12),
+                              Text(
+                                'Skills & Expertise',
+                                style: JMPTheme.title2.override(
+                                  color: JMPTheme.primaryColor,
+                                  useGoogleFonts: false,
+                                ),
+                              ),
+                            ],
+                          ),
+                          const SizedBox(height: 24),
                           
                           // Build skill categories
                           ..._skillCategories.entries.map(
@@ -348,39 +402,31 @@ class _ReportGenerateState extends State<ReportGenerate> {
                           // Areas of Interest
                           _buildAreaOfInterest(),
                           
-                          const SizedBox(height: 20),
+                          const SizedBox(height: 32),
                           
                           // Generate Button
                           SizedBox(
                             width: double.infinity,
-                            child: ElevatedButton(
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor: const Color(0xFF4A90E2),
-                                padding: const EdgeInsets.symmetric(vertical: 15),
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(10),
+                            child: FFButtonWidget(
+                              onPressed: () async {
+                                if (_isLoading) return;
+                                if (_formKey.currentState!.validate()) {
+                                  await _generateReport();
+                                }
+                              },
+                              text: _isLoading ? 'Generating Report...' : 'Generate Career Report',
+                              options: FFButtonOptions(
+                                width: double.infinity,
+                                height: 56,
+                                color: _isLoading ? Colors.grey[400] : JMPTheme.primaryColor,
+                                textStyle: JMPTheme.subtitle1.override(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.w600,
+                                  useGoogleFonts: false,
                                 ),
+                                borderRadius: 28,
+                                elevation: 4,
                               ),
-                              onPressed: _isLoading
-                                  ? null
-                                  : () async {
-                                      if (_formKey.currentState!.validate()) {
-                                        await _generateReport();
-                                      }
-                                    },
-                              child: _isLoading
-                                  ? const SizedBox(
-                                      height: 20,
-                                      width: 20,
-                                      child: CircularProgressIndicator(
-                                        color: Colors.white,
-                                        strokeWidth: 2,
-                                      ),
-                                    )
-                                  : const Text(
-                                      'Generate Report',
-                                      style: TextStyle(fontSize: 16),
-                                    ),
                             ),
                           ),
                         ],
@@ -391,47 +437,79 @@ class _ReportGenerateState extends State<ReportGenerate> {
                 
                 // Report Preview Section
                 if (_showPreview) ...[
-                  const SizedBox(height: 30),
-                  Card(
-                    elevation: 4,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(15),
+                  const SizedBox(height: 24),
+                  Container(
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(20),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withOpacity(0.1),
+                          blurRadius: 10,
+                          offset: const Offset(0, 4),
+                        ),
+                      ],
                     ),
                     child: Padding(
-                      padding: const EdgeInsets.all(16.0),
+                      padding: const EdgeInsets.all(24.0),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Text(
-                                'Career Report',
-                                style: GoogleFonts.ubuntu(
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.bold,
+                              Container(
+                                padding: const EdgeInsets.all(8),
+                                decoration: BoxDecoration(
+                                  color: JMPTheme.secondaryColor.withOpacity(0.1),
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
+                                child: Icon(
+                                  Icons.analytics_outlined,
+                                  color: JMPTheme.secondaryColor,
+                                  size: 24,
+                                ),
+                              ),
+                              const SizedBox(width: 12),
+                              Expanded(
+                                child: Text(
+                                  'Generated Report',
+                                  style: JMPTheme.title2.override(
+                                    color: JMPTheme.primaryColor,
+                                    useGoogleFonts: false,
+                                  ),
                                 ),
                               ),
                               IconButton(
-                                icon: const Icon(Icons.download),
+                                icon: Icon(
+                                  Icons.download_outlined,
+                                  color: JMPTheme.primaryColor,
+                                ),
                                 onPressed: () {
-                                  // TODO: Implement download functionality
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                    const SnackBar(
-                                      content: Text('Download feature coming soon!'),
-                                    ),
-                                  );
+                                  showSnackbar(context, 'Download feature coming soon!');
                                 },
                               ),
                             ],
                           ),
-                          const Divider(),
-                          const SizedBox(height: 10),
+                          const Divider(height: 32),
                           
                           // Display the generated report
-                          Text(
-                            _generatedReport,
-                            style: const TextStyle(fontSize: 14),
+                          Container(
+                            padding: const EdgeInsets.all(16),
+                            decoration: BoxDecoration(
+                              color: Colors.grey[50],
+                              borderRadius: BorderRadius.circular(12),
+                              border: Border.all(
+                                color: Colors.grey[200]!,
+                              ),
+                            ),
+                            child: Text(
+                              _generatedReport,
+                              style: JMPTheme.bodyText1.override(
+                                color: Colors.grey[800],
+                                lineHeight: 1.6,
+                                useGoogleFonts: false,
+                              ),
+                            ),
                           ),
                         ],
                       ),
@@ -442,6 +520,49 @@ class _ReportGenerateState extends State<ReportGenerate> {
             ),
           ),
         ),
+      ),
+    );
+  }
+
+  Widget _buildTextField({
+    required String label,
+    TextInputType? keyboardType,
+    required Function(String) onChanged,
+    String? Function(String?)? validator,
+  }) {
+    return TextFormField(
+      decoration: InputDecoration(
+        labelText: label,
+        labelStyle: JMPTheme.bodyText1.override(
+          color: Colors.grey[600],
+          useGoogleFonts: false,
+        ),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(12),
+          borderSide: BorderSide(color: Colors.grey[300]!),
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(12),
+          borderSide: BorderSide(color: Colors.grey[300]!),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(12),
+          borderSide: BorderSide(color: JMPTheme.primaryColor, width: 2),
+        ),
+        errorBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(12),
+          borderSide: BorderSide(color: Colors.red[300]!),
+        ),
+        filled: true,
+        fillColor: Colors.grey[50],
+        contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+      ),
+      keyboardType: keyboardType,
+      onChanged: onChanged,
+      validator: validator,
+      style: JMPTheme.bodyText1.override(
+        color: Colors.grey[800],
+        useGoogleFonts: false,
       ),
     );
   }
