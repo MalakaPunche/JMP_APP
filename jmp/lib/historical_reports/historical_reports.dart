@@ -49,6 +49,23 @@ class HistoricalReports extends StatelessWidget {
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
                   ),
+                  subtitle: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Created: ${report.createdAt.toString().split('.')[0]}',
+                        style: Theme.of(context).textTheme.bodySmall,
+                      ),
+                      Text(
+                        'Skills: ${(report.data['skills'] as List<dynamic>?)?.join(', ') ?? '-'}',
+                        style: Theme.of(context).textTheme.bodySmall,
+                      ),
+                      Text(
+                        'Areas: ${(report.data['areas'] as List<dynamic>?)?.join(', ') ?? '-'}',
+                        style: Theme.of(context).textTheme.bodySmall,
+                      ),
+                    ],
+                  ),
                   trailing: IconButton(
                     icon: const Icon(Icons.delete),
                     onPressed: () => _deleteReport(context, report.id),
@@ -92,7 +109,21 @@ class HistoricalReports extends StatelessWidget {
       builder: (context) => AlertDialog(
         title: Text(report.title),
         content: SingleChildScrollView(
-          child: Text(report.data['report'] ?? 'No report found'),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text('Created: ${report.createdAt.toString().split('.')[0]}'),
+              const SizedBox(height: 8),
+              Text('Skills: ${(report.data['skills'] as List<dynamic>?)?.join(', ') ?? '-'}'),
+              const SizedBox(height: 8),
+              Text('Areas: ${(report.data['areas'] as List<dynamic>?)?.join(', ') ?? '-'}'),
+              const SizedBox(height: 16),
+              const Text('Report:'),
+              const SizedBox(height: 8),
+              Text(report.data['report'] ?? 'No report found'),
+            ],
+          ),
         ),
         actions: [
           TextButton(
