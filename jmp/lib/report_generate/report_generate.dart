@@ -71,6 +71,9 @@ class _ReportGenerateState extends State<ReportGenerate> {
     'Mobile Development',
   ];
 
+  final List<String> _customSkills = [];
+  final TextEditingController _customSkillController = TextEditingController();
+
   @override
   void initState() {
     super.initState();
@@ -110,6 +113,11 @@ class _ReportGenerateState extends State<ReportGenerate> {
           .where((entry) => entry.value)
           .map((entry) => entry.key)
           .toList();
+
+      // Debug logging
+      print('Selected skills: $selectedSkills');
+      print('Custom skills: $_customSkills');
+      print('Selected areas: $selectedAreas');
 
       // Generate report using the API
       final report = await _apiService.generateReport(
@@ -247,6 +255,94 @@ class _ReportGenerateState extends State<ReportGenerate> {
               );
             }).toList(),
           ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildCustomSkillInput() {
+    return Row(
+      children: [
+        Expanded(
+          child: TextField(
+            controller: _customSkillController,
+            decoration: InputDecoration(
+              labelText: 'Add a custom skill',
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(12),
+              ),
+              contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+            ),
+          ),
+        ),
+        const SizedBox(width: 8),
+        ElevatedButton(
+          onPressed: () {
+            final skill = _customSkillController.text.trim();
+            if (skill.isNotEmpty && !_customSkills.contains(skill)) {
+              setState(() {
+                _customSkills.add(skill);
+                _selectedSkills[skill] = true;
+                _customSkillController.clear();
+              });
+            }
+          },
+          child: const Text('Add'),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildCustomSkillsSection() {
+    return Container(
+      margin: const EdgeInsets.only(bottom: 24),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            'Custom Skills',
+            style: JMPTheme.subtitle1.override(
+              color: JMPTheme.primaryColor,
+              fontWeight: FontWeight.w600,
+              useGoogleFonts: false,
+            ),
+          ),
+          const SizedBox(height: 12),
+          if (_customSkills.isNotEmpty)
+            Wrap(
+              spacing: 8,
+              runSpacing: 8,
+              children: _customSkills.map((skill) {
+                return FilterChip(
+                  label: Text(skill),
+                  selected: _selectedSkills[skill] ?? false,
+                  onSelected: (bool selected) {
+                    setState(() {
+                      _selectedSkills[skill] = selected;
+                    });
+                  },
+                  onDeleted: () {
+                    setState(() {
+                      _customSkills.remove(skill);
+                      _selectedSkills.remove(skill);
+                    });
+                  },
+                  selectedColor: JMPTheme.primaryColor.withOpacity(0.2),
+                  checkmarkColor: JMPTheme.primaryColor,
+                  backgroundColor: Colors.white,
+                  side: BorderSide(
+                    color: _selectedSkills[skill] ?? false
+                        ? JMPTheme.primaryColor
+                        : Colors.grey[300]!,
+                  ),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                );
+              }).toList(),
+            ),
+          const SizedBox(height: 12),
+          _buildCustomSkillInput(),
         ],
       ),
     );
@@ -398,6 +494,8 @@ class _ReportGenerateState extends State<ReportGenerate> {
                           ..._skillCategories.entries.map(
                             (entry) => _buildSkillCategory(entry.key, entry.value),
                           ),
+                          // Custom Skills Section (moved here)
+                          _buildCustomSkillsSection(),
                           
                           // Areas of Interest
                           _buildAreaOfInterest(),
