@@ -1,0 +1,214 @@
+# JMP App Repository - Comprehensive .gitignore
+
+# ===========================
+# SENSITIVE CONFIGURATION FILES
+# ===========================
+# Firebase configuration files (contain API keys and sensitive data)
+**/google-services.json
+**/GoogleService-Info.plist
+**/firebase_options.dart
+.firebase/
+.firebaserc
+firebase.json
+
+# Environment and configuration files
+.env
+.env.*
+*.env
+config.ini
+settings.json
+credentials.json
+secrets.json
+*.key
+*.pem
+*.cert
+*.p12
+*.keystore
+key.properties
+
+# ===========================
+# FLUTTER/DART SPECIFIC
+# ===========================
+# Flutter/Dart/Pub related
+**/doc/api/
+**/ios/Flutter/.last_build_id
+.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
+.pub-cache/
+.pub/
+/build/
+**/build/
+
+# Flutter generated files
+.flutter-plugins
+.flutter-plugins-dependencies
+.packages
+.metadata
+.dart_tool/
+pubspec.lock
+
+# ===========================
+# BUILD ARTIFACTS
+# ===========================
+# Android build artifacts
+**/android/app/debug/
+**/android/app/profile/
+**/android/app/release/
+**/android/.gradle/
+**/android/captures/
+**/android/gradlew
+**/android/gradlew.bat
+**/android/local.properties
+**/android/key.properties
+**/android/app/upload-keystore.jks
+
+# iOS build artifacts
+**/ios/Flutter/Generated.xcconfig
+**/ios/Flutter/flutter_export_environment.sh
+**/ios/Flutter/App.framework
+**/ios/Flutter/Flutter.framework
+**/ios/Flutter/Flutter.podspec
+**/ios/ServiceDefinitions.json
+**/ios/Runner/GeneratedPluginRegistrant.*
+**/ios/.symlinks/
+**/ios/Pods/
+**/ios/Podfile.lock
+
+# macOS build artifacts
+**/macos/Flutter/GeneratedPluginRegistrant.swift
+**/macos/Flutter/ephemeral/
+**/macos/Pods/
+**/macos/Podfile.lock
+
+# Windows build artifacts
+**/windows/flutter/generated_plugin_registrant.cc
+**/windows/flutter/generated_plugin_registrant.h
+**/windows/flutter/ephemeral/
+
+# Linux build artifacts
+**/linux/flutter/generated_plugin_registrant.cc
+**/linux/flutter/generated_plugin_registrant.h
+**/linux/flutter/ephemeral/
+
+# Web build artifacts
+**/web/packages/
+**/web/.packages
+
+# ===========================
+# DEVELOPMENT TOOLS
+# ===========================
+# IDE specific files
+.idea/
+.vscode/
+*.swp
+*.swo
+.project
+.pydevproject
+.settings/
+*.iml
+*.ipr
+*.iws
+
+# Xcode
+**/ios/Runner.xcworkspace/xcuserdata/
+**/ios/Runner.xcodeproj/xcuserdata/
+**/ios/Runner.xcodeproj/project.xcworkspace/xcuserdata/
+**/macos/Runner.xcworkspace/xcuserdata/
+**/macos/Runner.xcodeproj/xcuserdata/
+**/macos/Runner.xcodeproj/project.xcworkspace/xcuserdata/
+*.xcuserstate
+*.xccheckout
+*.moved-aside
+*.pbxuser
+!default.pbxuser
+*.mode1v3
+!default.mode1v3
+*.mode2v3
+!default.mode2v3
+*.perspectivev3
+!default.perspectivev3
+
+# ===========================
+# LOGS AND TEMPORARY FILES
+# ===========================
+*.log
+*.tmp
+*.temp
+*~
+*.bak
+*.backup
+*.orig
+*.rej
+
+# ===========================
+# OPERATING SYSTEM FILES
+# ===========================
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon?
+._*
+.DocumentRevisions-V100
+.fseventsd
+.Spotlight-V100
+.TemporaryItems
+.Trashes
+.VolumeIcon.icns
+.com.apple.timemachine.donotpresent
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+*.cab
+*.msi
+*.msm
+*.msp
+*.lnk
+
+# Linux
+*~
+.fuse_hidden*
+.directory
+.Trash-*
+.nfs*
+
+# ===========================
+# TESTING AND COVERAGE
+# ===========================
+coverage/
+.coverage
+htmlcov/
+.pytest_cache/
+.nyc_output/
+lcov.info
+*.lcov
+
+# ===========================
+# DOCUMENTATION
+# ===========================
+# Keep important documentation but ignore generated docs
+**/doc/api/
+.dartdoc_options.yaml
+
+# ===========================
+# ASSETS AND MEDIA
+# ===========================
+# Large media files (uncomment if you have large assets)
+# *.mp4
+# *.mov
+# *.avi
+# *.mkv
+# *.large_image_extension
+
+# ===========================
+# ALLOW SPECIFIC FILES
+# ===========================
+# Template files for configuration (these should be safe to commit)
+!**/*.template
+!**/google-services.json.template
+!**/firebase_options.dart.template
+!**/GoogleService-Info.plist.template 

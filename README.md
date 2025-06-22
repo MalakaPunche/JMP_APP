@@ -101,9 +101,12 @@ JMP Ecosystem:
    flutter pub get
    ```
 
-3. **Configure Firebase** (if using Firebase services)
-   - Add `google-services.json` to `android/app/`
-   - Configure Firebase project settings
+3. **Configure Firebase**
+   - **Important**: This repository does not include Firebase configuration files for security reasons
+   - Follow the detailed setup guide: [FIREBASE_SETUP.md](FIREBASE_SETUP.md)
+   - Copy template files and configure with your Firebase project:
+     - `jmp/android/app/google-services.json.template` → `jmp/android/app/google-services.json`
+     - `jmp/lib/firebase_options.dart.template` → `jmp/lib/firebase_options.dart`
 
 4. **Set up backend connection**
    - Update API endpoint in `lib/common/api_service.dart`
@@ -243,16 +246,95 @@ lib/
 
 ### Testing
 
+The JMP app includes a comprehensive testing suite with unit tests, widget tests, and integration tests. For detailed testing information, see [TESTING_GUIDE.md](jmp/TESTING_GUIDE.md).
+
+#### Quick Start
+
 ```bash
-# Run unit tests
+# Navigate to the Flutter app directory
+cd jmp
+
+# Install dependencies
+flutter pub get
+
+# Generate mock classes
+flutter packages pub run build_runner build
+
+# Run all tests
 flutter test
 
-# Run widget tests
-flutter test test/widget_test.dart
-
-# Run integration tests
-flutter drive --target=test_driver/app.dart
+# Run tests with coverage
+flutter test --coverage
 ```
+
+#### Using Test Runner Scripts
+
+**Linux/macOS:**
+```bash
+# Make script executable (first time only)
+chmod +x run_tests.sh
+
+# Run all tests
+./run_tests.sh all
+
+# Run unit tests only
+./run_tests.sh unit
+
+# Run tests with coverage and HTML report
+./run_tests.sh coverage --coverage-html
+
+# Run tests on specific platform
+./run_tests.sh widget --platform=android
+```
+
+**Windows:**
+```cmd
+# Run all tests
+run_tests.bat all
+
+# Run unit tests only
+run_tests.bat unit
+
+# Run tests with coverage
+run_tests.bat coverage --coverage-html
+
+# Run tests on specific platform
+run_tests.bat widget --platform=web
+```
+
+#### Test Types
+
+1. **Unit Tests** (`test/unit/`)
+   - Test business logic, API services, and data models
+   - Example: `flutter test test/unit/api_service_test.dart`
+
+2. **Widget Tests** (`test/widget/`)
+   - Test UI components and user interactions
+   - Example: `flutter test test/widget/report_generation_test.dart`
+
+3. **Integration Tests** (`test/integration/`)
+   - Test complete app flows and user journeys
+   - Example: `flutter test test/integration/app_flow_test.dart`
+
+#### Test Coverage
+
+```bash
+# Generate coverage report
+flutter test --coverage
+
+# View coverage in browser (requires lcov)
+genhtml coverage/lcov.info -o coverage/html
+open coverage/html/index.html
+```
+
+#### Testing Best Practices
+
+- Write tests for all critical functionality
+- Use descriptive test names
+- Mock external dependencies (HTTP, Firebase)
+- Test edge cases and error conditions
+- Maintain good test coverage (>80% recommended)
+- Run tests before committing code
 
 ## Academic Context
 
@@ -308,13 +390,38 @@ flutter run --debug
 flutter logs
 ```
 
+## Security and Configuration
+
+### Important Security Notes
+
+This repository is configured for public access with the following security measures:
+
+1. **Firebase Configuration Excluded**: All Firebase configuration files containing API keys and sensitive data are excluded from the repository
+2. **Template Files Provided**: Use `.template` files as starting points for your configuration
+3. **Environment Variables**: Sensitive data should be stored in environment variables or secure configuration files
+4. **Setup Guide**: Follow [FIREBASE_SETUP.md](FIREBASE_SETUP.md) for secure configuration
+
+### Required Configuration Files
+
+Before running the application, you must create these files from their templates:
+
+- `jmp/android/app/google-services.json` (from `google-services.json.template`)
+- `jmp/lib/firebase_options.dart` (from `firebase_options.dart.template`)
+
+### Development vs Production
+
+- Use separate Firebase projects for development and production
+- Never commit actual API keys or sensitive configuration to version control
+- Implement proper Firebase Security Rules for production deployment
+
 ## Contributing
 
 1. Fork the repository
 2. Create a feature branch
 3. Follow Flutter coding standards
 4. Add appropriate tests
-5. Submit a pull request with detailed description
+5. **Never commit sensitive configuration files**
+6. Submit a pull request with detailed description
 
 ## License
 
