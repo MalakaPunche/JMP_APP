@@ -323,9 +323,9 @@ This project is developed as part of academic research. Please refer to the prop
 ## Contact
 
 For questions or support:
-- **Academic**: [Your academic contact]
-- **Technical**: [Your technical contact]
-- **Project Repository**: [Repository URL]
+- **Academic**: 
+- **Technical**: 
+- **Project Repository**: 
 
 ---
 

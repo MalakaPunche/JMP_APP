@@ -215,7 +215,7 @@ class _JMPDashboardState extends State<JMPDashboard> {
                 Expanded(
                   child: _buildStatItem(
                     'Data Points',
-                    '300+',
+                    '258',
                     Icons.data_usage,
                     JMPTheme.primaryColor,
                   ),
