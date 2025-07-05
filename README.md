@@ -430,9 +430,8 @@ This project is developed as part of academic research. Please refer to the prop
 ## Contact
 
 For questions or support:
-- **Academic**: [njmdnyusof.work@gmail.com]
-- **Technical**: 
-- **Project Repository**: 
+njmdnyusof.work@gmail.com
+
 
 ---
 
